@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>算法困境：自动驾驶的道德代码 | AI Ethics</title>
-    <style>
+        <style>
         /* --- 核心变量与重置 --- */
         :root {
             --bg-dark: #0f172a;       /* 深蓝黑背景 */
@@ -18,6 +18,12 @@
             --font-mono: 'Fira Code', 'Consolas', monospace;
         }
 
+        /* 【新增】全局平滑滚动设置 */
+        html {
+            scroll-behavior: smooth; /* 关键：启用平滑滚动 */
+            scroll-padding-top: 100px; /* 关键：防止固定导航栏遮挡标题 */
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -27,7 +33,7 @@
             line-height: 1.7;
             overflow-x: hidden;
         }
-
+        
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
