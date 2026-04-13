@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度解析：功利主义算法 | AI Ethics</title>
+    <style>
+        /* --- 继承核心变量 --- */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-tech: #06b6d4;
+            --accent-warn: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: 'Fira Code', 'Consolas', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+        }
+        
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* --- 导航栏 (简化版) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .back-link {
+            color: var(--accent-tech);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-link:hover { color: #fff; }
+
+        /* --- 内容容器 --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-tech));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #fff;
+            border-left: 4px solid var(--accent-tech);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* --- 卡片与高亮 --- */
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box strong { color: var(--accent-tech); }
+
+        .formula {
+            font-family: var(--font-mono);
+            background: #111;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent-warn);
+            margin: 30px 0;
+            border: 1px dashed #333;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-muted);
+        }
+        
+        li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-tech);
+            font-family: var(--font-mono);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="ethics_deep.html#conflict" class="back-link">
+            <span>&larr;</span> 返回伦理困境主页
+        </a>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">ETHICS DEEP DIVE</div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>功利主义：代码中的数学正义</h1>
+            <p>Utilitarianism in Algorithmic Decision Making</p>
+        </header>
+
+        <section>
+            <p>在自动驾驶的语境下，功利主义（Utilitarianism）不再仅仅是一个哲学概念，它被转化为一种<strong>优化问题</strong>。其核心目标是：<code>Minimize(Total_Harm)</code>。</p>
+            
+            <div class="highlight-box">
+                <strong>核心定义：</strong><br>
+                最好的行动是那个能产生“最大多数人的最大幸福”的行动。在生死抉择中，这通常被简化为“牺牲少数，拯救多数”。
+            </div>
+        </section>
+
+        <section>
+            <h2>01. 算法实现逻辑</h2>
+            <p>如果我们将道德困境转化为代码，功利主义模型通常会维护一个“代价函数”（Cost Function）。车辆会实时计算每条可能路径的预期代价。</p>
+            
+            <div class="formula">
+                Cost = Σ (Probability_of_Collision × Severity_of_Injury)
+            </div>
+
+            <p>系统会尝试所有可能的轨迹（刹车、左转、右转、撞墙），并选择 <code>Cost</code> 最小的那一条。</p>
+            <ul>
+                <li><strong>输入变量：</strong> 障碍物类型（行人/车辆）、数量、年龄（潜在寿命损失）、是否遵守交通规则。</li>
+                <li><strong>权重分配：</strong> 救5个人 > 救1个人；救儿童 > 救老人（这在伦理上极具争议）。</li>
+                <li><strong>输出决策：</strong> 执行预期伤亡总数最小的操作。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>02. 经典的“电车难题”变体</h2>
+            <p>在 MIT 的 Moral Machine 实验中，功利主义倾向表现为：</p>
+            <ul>
+                <li><strong>数量优先：</strong> 面对撞死1人还是撞死5人的选择，绝大多数算法逻辑会选择撞向1人。</li>
+                <li><strong>物种偏好：</strong> 在必须选择撞人还是撞宠物时，功利主义通常倾向于保护人类（因为人类的社会效用更高）。</li>
+                <li><strong>社会价值：</strong> 这是一个危险的滑坡。如果算法开始评估“医生”比“流浪汉”更有价值，我们就进入了歧视的领域。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>03. 批判与反思</h2>
+            <p>虽然功利主义在数学上是优雅的，但在工程落地中面临巨大挑战：</p>
+            
+            <div class="highlight-box" style="border-color: var(--accent-warn); background: rgba(245, 158, 11, 0.1);">
+                <strong style="color: var(--accent-warn);">技术局限性：</strong><br>
+                传感器无法在毫秒级时间内准确判断行人的“身份”或“数量”。如果为了计算“最优解”而延迟了制动时间，可能导致本可避免的事故变成必然事故。
+            </div>
+
+            <p><strong>信任危机：</strong> 如果消费者知道车子在危急时刻可能会为了救路人而“主动牺牲”车主，他们还会购买这辆车吗？这就是著名的<strong>“社会困境”</strong>。</p>
+        </section>
+
+        <section>
+            <h2>04. 结语</h2>
+            <p>功利主义为机器提供了一套可计算的规则，但它忽略了个体的权利和尊严。也许未来的法律不会允许代码简单地执行“减法运算”，而是要求建立更复杂的<strong>责任归属体系</strong>。</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 VTV NYH Project.</p>
+    </footer>
+
+</body>
+</html>

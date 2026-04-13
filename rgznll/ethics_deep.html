@@ -461,32 +461,54 @@
         </div>
     </section>
 
-    <!-- 核心冲突 -->
+        <!-- 核心冲突 -->
     <section id="conflict" class="container" style="background: rgba(255,255,255,0.02); border-radius: 20px;">
         <h2 class="section-title fade-in-up">02. 哲学与代码的碰撞</h2>
         <div class="conflict-grid">
-            <!-- 功利主义 -->
-            <div class="conflict-card utilitarian fade-in-up">
-                <h4><div class="icon-box">⚖️</div> 功利主义 (Utilitarianism)</h4>
-                <p><strong>核心逻辑：</strong> 追求“最大多数人的最大幸福”。</p>
-                <p><strong>代码表现：</strong> <code>if (victims_count > passengers_count) { sacrifice_passenger(); }</code></p>
-                <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果为了救5个闯红灯的人而牺牲1个遵守规则的乘客，正义何在？</p>
-            </div>
+            
+            <!-- 功利主义卡片：添加链接包裹 -->
+            <a href="utilitarianism.html" style="text-decoration: none; color: inherit; display: block;">
+                <div class="conflict-card utilitarian fade-in-up" style="height: 100%; cursor: pointer;">
+                    <h4><div class="icon-box">⚖️</div> 功利主义 (Utilitarianism)</h4>
+                    <p><strong>核心逻辑：</strong> 追求“最大多数人的最大幸福”。</p>
+                    <p><strong>代码表现：</strong> <code>if (victims_count > passengers_count) { sacrifice_passenger(); }</code></p>
+                    <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果为了救5个闯红灯的人而牺牲1个遵守规则的乘客，正义何在？</p>
+                    
+                    <!-- 新增提示文字 -->
+                    <div style="margin-top: 20px; color: var(--accent-tech); font-size: 0.9rem; font-weight: bold;">
+                        点击展开深度解析 &rarr;
+                    </div>
+                </div>
+            </a>
 
             <!-- 义务论 -->
-            <div class="conflict-card deontological fade-in-up">
-                <h4><div class="icon-box">🛡️</div> 义务论 (Deontology)</h4>
-                <p><strong>核心逻辑：</strong> 某些行为（如杀害无辜）本身就是错的，无论结果如何。</p>
-                <p><strong>代码表现：</strong> <code>do_not_active_harm(); // 即使这意味着更多人受伤</code></p>
-                <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果车子只能选择撞墙（死乘客）或撞人（死行人），不作为是否也是一种恶？</p>
-            </div>
+            <a href="deontology.html" style="text-decoration: none; color: inherit; display: block;">
+                <div class="conflict-card deontological fade-in-up" style="height: 100%; cursor: pointer;">
+                    <h4><div class="icon-box">🛡️</div> 义务论 (Deontology)</h4>
+                    <p><strong>核心逻辑：</strong> 某些行为（如杀害无辜）本身就是错的，无论结果如何。</p>
+                    <p><strong>代码表现：</strong> <code>do_not_active_harm(); // 即使这意味着更多人受伤</code></p>
+                    <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果车子只能选择撞墙（死乘客）或撞人（死行人），不作为是否也是一种恶？</p>
+                    
+                    <!-- 新增提示文字 -->
+                    <div style="margin-top: 20px; color: var(--accent-purple); font-size: 0.9rem; font-weight: bold;">
+                        点击展开深度解析 &rarr;
+                    </div>
+                </div>
+            </a>
 
             <!-- 消费者悖论 -->
-            <div class="conflict-card fade-in-up" style="border-color: var(--accent-warn);">
-                <h4><div class="icon-box" style="background:rgba(245,158,11,0.2); color:var(--accent-warn);">🛒</div> 消费者悖论</h4>
-                <p><strong>研究数据：</strong> MIT Moral Machine 实验显示，人们普遍赞同“功利主义”的车（救多数人），但<strong>自己绝不会买</strong>这样的车。</p>
-                <p style="margin-top:15px;">我们希望别人开“道德”的车，但自己想开“安全”的车。</p>
-            </div>
+            <a href="consumer_paradox.html" style="text-decoration: none; color: inherit; display: block;">
+                <div class="conflict-card fade-in-up" style="height: 100%; cursor: pointer;">
+                    <h4><div class="icon-box" style="background:rgba(245,158,11,0.2); color:var(--accent-warn);">🛒</div> 消费者悖论 (Consumer Paradox)</h4>
+                    <p><strong>研究数据：</strong> MIT Moral Machine 实验显示，人们普遍赞同“功利主义”的车（救多数人），但<strong>自己绝不会买</strong>这样的车。</p>
+                    <p style="margin-top:15px;">我们希望别人开“道德”的车，但自己想开“安全”的车。</p>
+                    
+                    <!-- 新增提示文字 -->
+                    <div style="margin-top: 20px; color: var(--accent-warn); font-size: 0.9rem; font-weight: bold;">
+                        点击展开深度解析 &rarr;
+                    </div>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -522,38 +544,42 @@
         </div>
     </section>
 
-    <!-- 小组辩论 -->
+        <!-- 小组辩论 -->
     <section id="debate" class="container">
         <h2 class="section-title fade-in-up" style="text-align: center; display: block;">04. 小组圆桌辩论</h2>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 50px;" class="fade-in-up">成员观点碰撞：没有标准答案，只有审慎的思考</p>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 50px;" class="fade-in-up">
+            没有标准答案，只有审慎的思考。<br>
+            点击下方按钮，查看小组成员关于“生死代码”的真实讨论记录。
+        </p>
         
-        <div class="debate-container">
-            <!-- 成员 A -->
-            <div class="debate-msg msg-a">
-                <div class="avatar">A</div>
-                <div class="bubble">
-                    <span class="role-tag" style="color: var(--accent-tech);">成员 A (算法方向)</span>
-                    <p>我倾向于<strong>功利主义的最优解</strong>。虽然冷酷，但从大数据看，如果所有车都遵循“总伤害最小化”，社会总死亡人数会下降。我们可以给不同对象赋予权重，通过计算期望值来做决策。</p>
+        <!-- 【修改点】将静态辩论改为点击进入子页面 -->
+        <div class="fade-in-up" style="text-align: center;">
+            <a href="debate_detail.html" style="
+                display: inline-flex;
+                align-items: center;
+                gap: 15px;
+                padding: 20px 40px;
+                background: var(--bg-card);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 16px;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                color: var(--text-main);
+            " onmouseover="this.style.borderColor='var(--accent-tech)'; this.style.transform='translateY(-5px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.transform='translateY(0)'">
+                
+                <div style="display: flex; margin-right: 10px;">
+                    <div style="width: 40px; height: 40px; background: var(--accent-tech); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; margin-right: -10px; border: 2px solid var(--bg-card);">A</div>
+                    <div style="width: 40px; height: 40px; background: var(--accent-warn); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; margin-right: -10px; border: 2px solid var(--bg-card);">B</div>
+                    <div style="width: 40px; height: 40px; background: var(--accent-purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; border: 2px solid var(--bg-card);">C</div>
                 </div>
-            </div>
-
-            <!-- 成员 B -->
-            <div class="debate-msg msg-b">
-                <div class="avatar">B</div>
-                <div class="bubble">
-                    <span class="role-tag" style="color: var(--accent-warn);">成员 B (系统工程方向)</span>
-                    <p>我反对。技术上很难实时准确识别“儿童”或“老人”，一旦误判就是灾难。而且，如果车企公开承认算法会“主动牺牲乘客”，没人会买车。我建议采用<strong>“严格守规”</strong>策略：只要车不违规，发生事故由违规方负责，车企不承担道德审判。</p>
+                
+                <div style="text-align: left;">
+                    <div style="font-weight: bold; font-size: 1.1rem;">查看完整辩论实录</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">包含算法、工程与交互视角的深度碰撞</div>
                 </div>
-            </div>
-
-            <!-- 成员 C -->
-            <div class="debate-msg msg-c">
-                <div class="avatar">C</div>
-                <div class="bubble">
-                    <span class="role-tag" style="color: var(--accent-purple);">成员 C (人机交互方向)</span>
-                    <p>问题的核心是<strong>信任错位</strong>。我认为道德代码不应由程序员在黑盒子里决定。车辆应提供<strong>“透明化报告”</strong>，甚至在购车时让用户知晓车辆的伦理倾向（虽然这可能被法律禁止）。真正的危机在于我们不知道机器在想什么。</p>
-                </div>
-            </div>
+                
+                <div style="margin-left: 20px; color: var(--accent-tech); font-size: 1.5rem;">&rarr;</div>
+            </a>
         </div>
     </section>
 
@@ -570,7 +596,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2023 VTV NYH Group Project. All Rights Reserved.</p>
+        <p>&copy; 2026 VTV NYH Project.</p>
         <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5;">Designed for Academic Discussion on AI Ethics</p>
         <div style="margin-top: 20px;">
             <a href="../index.html" style="color: var(--accent-tech); font-weight: bold; border: 1px solid var(--accent-tech); padding: 8px 20px; border-radius: 20px; display: inline-block;">

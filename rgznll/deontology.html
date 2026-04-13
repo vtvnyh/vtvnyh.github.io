@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度解析：义务论与规则 | AI Ethics</title>
+    <style>
+        /* --- 继承核心变量 --- */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-tech: #06b6d4;
+            --accent-warn: #f59e0b;
+            --accent-purple: #8b5cf6; /* 义务论主色调 */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: 'Fira Code', 'Consolas', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+        }
+        
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* --- 导航栏 --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .back-link {
+            color: var(--accent-purple);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-link:hover { color: #fff; }
+
+        /* --- 内容容器 --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #fff;
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* --- 卡片与高亮 --- */
+        .highlight-box {
+            background: rgba(139, 92, 246, 0.1); /* 紫色背景 */
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box strong { color: var(--accent-purple); }
+
+        .code-block {
+            font-family: var(--font-mono);
+            background: #111;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #d4d4d4;
+            margin: 30px 0;
+            border: 1px solid #333;
+        }
+        
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #c586c0; }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-muted);
+        }
+        
+        li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-purple);
+            font-family: var(--font-mono);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="ethics_deep.html#conflict" class="back-link">
+            <span>&larr;</span> 返回伦理困境主页
+        </a>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">ETHICS DEEP DIVE</div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>义务论：不可逾越的代码红线</h1>
+            <p>Deontology: Rules Over Results</p>
+        </header>
+
+        <section>
+            <p>与功利主义不同，义务论（Deontology）不关心结果的“好坏”，只关心行为本身的“对错”。在康德哲学中，某些行为（如杀害无辜）在任何情况下都是错误的，无论它能拯救多少人。</p>
+            
+            <div class="highlight-box">
+                <strong>核心定义：</strong><br>
+                道德源于对规则和义务的遵守。在自动驾驶中，这意味着车辆必须遵守绝对的禁令（Hard Constraints），例如“严禁主动撞击行人”，即使这样做能避免更大的灾难。
+            </div>
+        </section>
+
+        <section>
+            <h2>01. 算法实现：硬约束与优先级</h2>
+            <p>在代码层面，义务论不像功利主义那样进行加权求和，而是表现为<strong>优先级队列</strong>或<strong>硬性拦截器</strong>。</p>
+            
+            <div class="code-block">
+<span class="code-comment">// 义务论逻辑伪代码</span>
+<span class="code-keyword">if</span> (action == ACTIVE_HARM_TO_HUMAN) {
+    <span class="code-keyword">return</span> FORBIDDEN; <span class="code-comment">// 绝对禁止，无论后果如何</span>
+} 
+<span class="code-keyword">else if</span> (action == VIOLATE_TRAFFIC_RULE) {
+    <span class="code-keyword">return</span> LOW_PRIORITY;
+} 
+<span class="code-keyword">else</span> {
+    optimize_comfort();
+}
+            </div>
+
+            <p>这种逻辑下，车辆不会计算“撞1个人比撞5个人好”，而是首先排除所有“主动撞人”的选项。如果所有选项都包含撞人，系统可能会陷入逻辑死锁，或者默认选择“不作为”（即保持当前轨迹，哪怕结果是悲剧）。</p>
+        </section>
+
+        <section>
+            <h2>02. “不作为”的道德责任</h2>
+            <p>义务论在自动驾驶中面临的最大指责是：<strong>不作为是否也是一种恶？</strong></p>
+            <ul>
+                <li><strong>电车难题变体：</strong> 如果车子刹车失灵，前方有5人，旁边有1人。功利主义会转向撞1人；义务论可能认为“转向”是主动杀人，而“直行”是自然发生的悲剧，因此选择直行。</li>
+                <li><strong>法律辩护优势：</strong> 从法律角度看，义务论策略更容易为车企辩护——“车辆严格遵守了交通法规和不得伤人的底线，事故是由外部不可抗力导致的”。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>03. 现实困境：规则的冲突</h2>
+            <p>现实世界充满了规则冲突，简单的义务论代码难以处理复杂场景：</p>
+            
+            <div class="highlight-box" style="border-color: var(--accent-warn); background: rgba(245, 158, 11, 0.1);">
+                <strong style="color: var(--accent-warn);">经典冲突：</strong><br>
+                为了避让突然冲出的儿童（规则A：保护生命），车辆不得不压实线逆行（规则B：遵守交规）。在义务论框架下，哪条规则具有更高的“绝对性”？这需要预先设定复杂的规则层级（Rule Hierarchy）。
+            </div>
+
+            <p>如果规则层级设定不当，车辆可能在极端情况下表现出僵化甚至荒谬的行为，例如为了不被追尾而拒绝紧急避让行人。</p>
+        </section>
+
+        <section>
+            <h2>04. 结语</h2>
+            <p>义务论为AI设定了<strong>道德底线</strong>，防止其沦为冷血的计算器。但它缺乏灵活性，难以在“两难”中做出最优解。未来的伦理算法很可能是<strong>混合式</strong>的：以义务论为边界，在安全空间内使用功利主义进行优化。</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 VTV NYH Project.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度解析：消费者悖论 | AI Ethics</title>
+    <style>
+        /* --- 继承核心变量 --- */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-tech: #06b6d4;
+            --accent-warn: #f59e0b; /* 悖论主色调：警示/矛盾 */
+            --accent-purple: #8b5cf6;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: 'Fira Code', 'Consolas', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+        }
+        
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* --- 导航栏 --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .back-link {
+            color: var(--accent-warn);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-link:hover { color: #fff; }
+
+        /* --- 内容容器 --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-warn));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: #fff;
+            border-left: 4px solid var(--accent-warn);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* --- 卡片与高亮 --- */
+        .highlight-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box strong { color: var(--accent-warn); }
+
+        .chart-placeholder {
+            background: #111;
+            border: 1px dashed #444;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 30px 0;
+            color: #666;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            color: var(--text-muted);
+        }
+        
+        li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-warn);
+            font-family: var(--font-mono);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="ethics_deep.html#conflict" class="back-link">
+            <span>&larr;</span> 返回伦理困境主页
+        </a>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">ETHICS DEEP DIVE</div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>消费者悖论：知行不一的道德困境</h1>
+            <p>The Consumer Paradox in Autonomous Vehicles</p>
+        </header>
+
+        <section>
+            <p>这是一个让车企和立法者头疼不已的现象：<strong>人们在口头上支持“利他”的算法，但在钱包上却投票给“利己”的车辆。</strong></p>
+            
+            <div class="highlight-box">
+                <strong>核心矛盾：</strong><br>
+                当被问及“自动驾驶汽车应该如何选择”时，大多数人选择功利主义（牺牲乘客救更多人）。<br>
+                但当被问及“你会购买什么样的车”时，大多数人选择保护乘客优先的车辆。
+            </div>
+        </section>
+
+        <section>
+            <h2>01. MIT Moral Machine 实验启示</h2>
+            <p>麻省理工学院媒体实验室发起的“Moral Machine”实验收集了全球数百万人的数据，揭示了一个残酷的社会困境（Social Dilemma）。</p>
+            
+            <div class="chart-placeholder">
+                [数据可视化示意]<br>
+                绿色柱状图：80%的人认为车子应该牺牲1名乘客救5名行人。<br>
+                红色柱状图：只有20%的人表示愿意购买这种会牺牲自己的车子。
+            </div>
+
+            <p>这意味着，如果政府强制规定所有车辆必须遵循“功利主义算法”，可能会导致<strong>自动驾驶汽车的普及率大幅下降</strong>。而由于人工驾驶的事故率远高于自动驾驶，这反而可能导致总体道路死亡人数的上升。</p>
+        </section>
+
+        <section>
+            <h2>02. 为什么会这样？</h2>
+            <ul>
+                <li><strong>本能自我保护：</strong> 进化心理学告诉我们，生存是第一本能。在生死攸关的时刻，理性计算的“社会总福利”往往败给个体的求生欲。</li>
+                <li><strong>信任缺失：</strong> 消费者担心一旦将控制权交给算法，自己就成了“可被牺牲的计算单元”。这种对黑盒子的不信任加剧了防御心理。</li>
+                <li><strong>责任分散效应：</strong> 人们希望<b>别人</b>开道德的车来保障公共安全，但自己享受<b>不道德</b>的车带来的私人安全红利。</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>03. 破局之道：监管与市场</h2>
+            <p>既然依靠消费者的道德自觉行不通，解决方案可能来自外部：</p>
+            
+            <div class="highlight-box" style="border-color: var(--accent-tech); background: rgba(6, 182, 212, 0.1);">
+                <strong style="color: var(--accent-tech);">可能的解决方案：</strong><br>
+                1. <strong>强制统一标准：</strong> 法律规定所有车辆必须具备相同的伦理逻辑（如最低伤害原则），消除“恶性竞争”。<br>
+                2. <strong>保险激励：</strong> 为购买“道德型”车辆的车主提供大幅保费优惠。<br>
+                3. <strong>透明度：</strong> 允许用户在一定范围内调整车辆的“风险偏好”，但设定法律底线。
+            </div>
+
+            <p>如果不解决这个悖论，自动驾驶技术可能会陷入“叫好不叫座”的僵局，或者演变成只有富人才能负担得起的“绝对安全特权”。</p>
+        </section>
+
+        <section>
+            <h2>04. 结语</h2>
+            <p>消费者悖论不仅是商业问题，更是人性问题。它提醒我们，代码不仅要处理物理世界的障碍物，还要处理人类心理中的偏见与矛盾。</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 VTV NYH Project.</p>
+    </footer>
+
+</body>
+</html>
