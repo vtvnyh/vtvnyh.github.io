@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器道德决策 | AI Ethics</title>
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* 导航栏 */
+        nav {
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        nav a.back-link {
+            text-decoration: none;
+            color: #888;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        nav a.back-link:hover {
+            color: #bfa05f;
+        }
+
+        nav a.back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        nav .site-title {
+            font-weight: 600;
+            color: #bfa05f;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* 主体布局：双栏 Grid */
+        .layout-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 320px; /* 左侧自适应，右侧固定320px */
+            gap: 40px;
+            flex: 1;
+        }
+
+        /* 左侧主内容区 */
+        main {
+            min-width: 0; /* 防止内容溢出 */
+        }
+
+        /* 右侧侧边栏 */
+        aside {
+            position: relative;
+        }
+
+        .sidebar-widget {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.02);
+            position: sticky;
+            top: 100px; /* 滚动时吸附 */
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        /* 文章头部 */
+        header.article-header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: #2c2c2c;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* 通用区块样式 */
+        section {
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            margin-bottom: 40px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #2c2c2c;
+            margin-bottom: 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background-color: #bfa05f;
+            margin-right: 15px;
+            border-radius: 3px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin: 25px 0 15px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1.2em;
+            color: #555;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        /* 媒体容器 */
+        .media-container {
+            width: 100%;
+            height: 350px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .media-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .caption {
+            font-size: 0.85rem;
+            color: #999;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        /* 代码块样式 - 体现CS专业性 */
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            border-left: 4px solid #bfa05f;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        .keyword { color: #c678dd; }
+        .function { color: #61afef; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+
+        /* 辩论/讨论区域样式 */
+        .debate-thread {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .debate-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .avatar.dev { background-color: #3498db; }
+        .avatar.eng { background-color: #e67e22; }
+        .avatar.eth { background-color: #9b59b6; }
+
+        .debate-content {
+            background: #f9f9f9;
+            padding: 15px 20px;
+            border-radius: 0 12px 12px 12px;
+            flex: 1;
+            position: relative;
+        }
+
+        .debate-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-top: 8px solid #f9f9f9;
+            border-left: 8px solid transparent;
+        }
+
+        .debate-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .debate-role {
+            font-size: 0.75rem;
+            color: #999;
+            font-weight: normal;
+            margin-left: 5px;
+        }
+
+        .debate-text {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* 侧边栏列表 */
+        ul.toc-list {
+            list-style: none;
+        }
+
+        ul.toc-list li {
+            margin-bottom: 10px;
+        }
+
+        ul.toc-list a {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: block;
+            padding: 5px 0;
+        }
+
+        ul.toc-list a:hover {
+            color: #bfa05f;
+            padding-left: 5px;
+        }
+
+        .term-tag {
+            display: inline-block;
+            background: #eee;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #555;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #aaa;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            background: #fff;
+            margin-top: auto;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            .layout-container {
+                grid-template-columns: 1fr;
+            }
+            aside {
+                order: -1; /* 移动端侧边栏置顶或置底，这里选择置顶作为摘要 */
+            }
+            .sidebar-widget {
+                position: static;
+            }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html" class="back-link">返回主页</a>
+        <span class="site-title">VTV NYH · AI ETHICS</span>
+    </nav>
+
+    <div class="layout-container">
+        <!-- 左侧主内容 -->
+        <main>
+            <header class="article-header">
+                <h1>代码之下的生死博弈</h1>
+                <p class="subtitle">从 Uber 致死案看自动驾驶的道德困境与责任归属</p>
+            </header>
+
+            <!-- 第一部分：案例回顾 -->
+            <section>
+                <h2>01. 深夜的坦佩：当算法失效</h2>
+                <div class="media-container">
+                    <img src="https://images.unsplash.com/photo-1495572050486-a96f89645481?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Night Street Simulation">
+                </div>
+                <p class="caption">示意图：夜间街道监控视角下的自动驾驶测试场景</p>
+                
+                <p>
+                    2018年3月18日，美国亚利桑那州坦佩市。49岁的 Elaine Herzberg 推着自行车横穿马路时，被一辆处于自动驾驶模式的 Uber Volvo XC90 撞倒身亡。这是全球首例自动驾驶汽车致行人死亡的案件。
+                </p>
+                <p>
+                    事后调查显示，车辆的雷达系统其实早在 <strong>6秒前</strong> 就检测到了障碍物。然而，软件系统的分类器在“未知物体”、“车辆”和“自行车”之间反复跳变。更致命的是，为了避免频繁急刹车影响乘客体验（Comfort Mode），系统将紧急制动的权限限制在了最后1.3秒——此时物理上已无法避免碰撞。
+                </p>
+                <p>
+                    这个悲剧揭示了一个残酷的现实：<strong>道德选择并非只存在于“撞谁”的瞬间，更存在于我们如何设定“舒适度”与“敏感度”权重的每一行代码中。</strong>
+                </p>
+            </section>
+
+            <!-- 第二部分：CS专业视角的技术困境 -->
+            <section>
+                <h2>02. 计算机视角：技术实现的道德陷阱</h2>
+                <p>作为计算机专业的学生，我们深知算法并非黑盒魔法，而是由具体的逻辑和参数构成的。在自动驾驶中，道德困境往往转化为以下技术难题：</p>
+                
+                <h3>1. 感知不确定性与置信度阈值</h3>
+                <p>
+                    深度学习模型输出的不是绝对的“是/否”，而是概率（Confidence Score）。如果设定阈值过高，会漏检（如Uber案）；设定过低，会导致“幽灵刹车”。
+                </p>
+                <pre><code><span class="comment"># 伪代码：决策逻辑中的道德权衡</span>
+<span class="keyword">if</span> obstacle.confidence > <span class="function">HIGH_THRESHOLD</span>:
+    <span class="function">emergency_brake</span>()
+<span class="keyword">elif</span> obstacle.confidence > <span class="function">LOW_THRESHOLD</span>:
+    <span class="comment"># 为了舒适性，选择忽略低置信度物体？</span>
+    <span class="function">maintain_speed</span>() 
+<span class="keyword">else</span>:
+    <span class="function">ignore</span>()</code></pre>
+                <p>
+                    这里的 `HIGH_THRESHOLD` 和 `LOW_THRESHOLD` 不仅仅是超参数，它们是生死的边界。谁来定义这个阈值？是工程师的直觉，还是安全标准的规定？
+                </p>
+
+                <h3>2. 损失函数（Loss Function）的价值排序</h3>
+                <p>
+                    在强化学习中，Agent 通过最大化奖励函数来学习。如果我们将“乘客舒适度”设为高权重，将“轻微违规”设为低惩罚，模型就会学会“激进驾驶”。当面对极端情况时，模型可能会计算出“牺牲行人”的总损失（Loss）小于“牺牲乘客+严重车损”的损失。
+                </p>
+            </section>
+
+            <!-- 第三部分：小组辩论 -->
+            <section>
+                <h2>03. 圆桌辩论：代码背后的价值观冲突</h2>
+                <p>在小组讨论中，成员们基于各自的技术背景与伦理思考，产生了激烈的观点碰撞：</p>
+                
+                <div class="debate-thread">
+                    <!-- 观点 1 -->
+                    <div class="debate-item">
+                        <div class="avatar dev">A</div>
+                        <div class="debate-content">
+                            <span class="debate-name">成员 A <span class="debate-role">算法方向</span></span>
+                            <p class="debate-text">
+                                <strong>主张：功利主义的最优解。</strong><br>
+                                我认为应该采用“伤害最小化”算法。虽然这很冷酷，但从大数据角度看，如果每辆车都遵循“保全多数生命”的逻辑，社会总死亡人数会下降。我们可以给不同对象赋予权重（如：行人 > 乘客，儿童 > 老人），通过计算期望值来做决策。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 观点 2 -->
+                    <div class="debate-item">
+                        <div class="avatar eng">B</div>
+                        <div class="debate-content">
+                            <span class="debate-name">成员 B <span class="debate-role">系统工程方向</span></span>
+                            <p class="debate-text">
+                                <strong>反驳：技术不可行性与法律风险。</strong><br>
+                                我反对成员A的观点。首先，实时识别“儿童”还是“老人”在技术上极难保证100%准确，一旦误判就是灾难。其次，如果车企公开承认算法会“主动牺牲乘客”，没人会买车。我建议采用<strong>“随机化”或“严格守规”</strong>策略：只要车不违规行驶，发生事故就是行人的责任，车企不承担道德审判。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 观点 3 -->
+                    <div class="debate-item">
+                        <div class="avatar eth">C</div>
+                        <div class="debate-content">
+                            <span class="debate-name">成员 C <span class="debate-role">人机交互方向</span></span>
+                            <p class="debate-text">
+                                <strong>综合：透明化与用户知情权。</strong><br>
+                                你们都在讨论“车该怎么选”，但忽略了“人怎么想”。我认为道德代码不应由程序员在黑盒子里决定。车辆应提供<strong>“道德设置”</strong>选项（虽然在法律上可能不被允许），或者至少在用户手册中明确告知：本车在极端情况下优先保护车内人员。真正的伦理危机在于<strong>信任的错位</strong>。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 第四部分：结论与建议 -->
+            <section>
+                <h2>04. 破局：从“二选一”到“系统性治理”</h2>
+                <p>
+                    经过辩论，我们小组认为，试图编写一个完美的“道德算法”是徒劳的。我们提出以下建设性建议：
+                </p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #bfa05f;">✓</span>
+                        <strong>建立“黑匣子”监管机制：</strong> 强制所有自动驾驶车辆安装不可篡改的数据记录仪，类似于航空业，以便在事故后进行独立的伦理审计。
+                    </li>
+                    <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #bfa05f;">✓</span>
+                        <strong>混合伦理模型：</strong> 设定<strong>底线伦理</strong>（如：绝不主动攻击无辜者）+ <strong>风险最小化原则</strong>（在不可避免的伤害中，选择动能冲击最小的路径，而非基于身份的价值判断）。
+                    </li>
+                    <li style="margin-bottom: 15px; padding-left: 25px; position: relative;">
+                        <span style="position: absolute; left: 0; color: #bfa05f;">✓</span>
+                        <strong>人机共驾的过渡期规范：</strong> 在L3/L4级自动驾驶阶段，明确人类接管的法律义务与技术边界，防止“责任真空”。
+                    </li>
+                </ul>
+                <blockquote style="background: #fcfcfc; border-left: 4px solid #bfa05f; padding: 20px; margin-top: 20px; font-style: italic; color: #666;">
+                    “如果算法为了拯救5个孩子而撞向墙壁导致你死亡，你会感谢这辆车的‘高尚’，还是会起诉汽车制造商的‘谋杀’？法律的判决，将决定未来代码的温度。”
+                </blockquote>
+            </section>
+        </main>
+
+        <!-- 右侧侧边栏 -->
+        <aside>
+            <!-- 小组档案 -->
+            <div class="sidebar-widget">
+                <div class="widget-title">小组档案</div>
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <div style="width: 40px; height: 40px; background: #bfa05f; border-radius: 50%; margin-right: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">V</div>
+                    <div>
+                        <div style="font-weight: 600; color: #333;">VTV NYH Group</div>
+                        <div style="font-size: 0.8rem; color: #999;">Computer Science Dept.</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 0;">
+                    致力于探索技术与人文的交叉领域，关注人工智能背后的伦理与社会影响。
+                </p>
+            </div>
+
+            <!-- 目录导航 -->
+            <div class="sidebar-widget">
+                <div class="widget-title">本文导航</div>
+                <ul class="toc-list">
+                    <li><a href="#">01. 深夜的坦佩：案例回顾</a></li>
+                    <li><a href="#">02. 技术实现的道德陷阱</a></li>
+                    <li><a href="#">03. 圆桌辩论：观点碰撞</a></li>
+                    <li><a href="#">04. 破局：系统性治理</a></li>
+                </ul>
+            </div>
+
+            <!-- 核心术语 -->
+            <div class="sidebar-widget">
+                <div class="widget-title">核心术语</div>
+                <div style="margin-bottom: 10px;">
+                    <span class="term-tag">Trolley Problem</span>
+                    <span class="term-tag">Utilitarianism</span>
+                    <span class="term-tag">Deontology</span>
+                    <span class="term-tag">Confidence Score</span>
+                    <span class="term-tag">Loss Function</span>
+                    <span class="term-tag">Moral Machine</span>
+                </div>
+                <p style="font-size: 0.85rem; color: #888; margin-top: 10px;">
+                    * 点击标签可跳转至相关维基百科页面（模拟功能）
+                </p>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        &copy; 2023 VTV NYH Group Project. All Rights Reserved.<br>
+        Designed for Academic Discussion on AI Ethics.
+    </footer>
+
+</body>
+</html>

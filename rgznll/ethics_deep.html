@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算法困境：自动驾驶的道德代码 | AI Ethics</title>
+    <style>
+        /* --- 核心变量与重置 --- */
+        :root {
+            --bg-dark: #0f172a;       /* 深蓝黑背景 */
+            --bg-card: #1e293b;       /* 卡片背景 */
+            --text-main: #e2e8f0;     /* 主要文字 */
+            --text-muted: #94a3b8;    /* 次要文字 */
+            --accent-tech: #06b6d4;   /* 科技青 */
+            --accent-warn: #f59e0b;   /* 警示橙 */
+            --accent-purple: #8b5cf6; /* 伦理紫 */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: 'Fira Code', 'Consolas', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- 动画类 --- */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 导航栏 --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            color: var(--accent-tech);
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-tech);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- Hero 区域 (首屏) --- */
+        header.hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* 动态背景效果 */
+        header.hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(15,23,42,0) 70%);
+            animation: pulse 10s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-tech));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* --- 通用容器 --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::before {
+            content: '//';
+            color: var(--accent-tech);
+            margin-right: 10px;
+            font-family: var(--font-mono);
+        }
+
+        /* --- 案例引入区 (Grid 布局) --- */
+        .case-study {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .case-image {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .case-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .case-image:hover img { transform: scale(1.05); }
+
+        .case-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(245, 158, 11, 0.9);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .case-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .case-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        /* --- 核心冲突 (卡片对比) --- */
+        .conflict-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .conflict-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conflict-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-tech);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+        }
+
+        .conflict-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .utilitarian .icon-box { background: rgba(6, 182, 212, 0.2); color: var(--accent-tech); }
+        .deontological .icon-box { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
+
+        .conflict-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- 技术视角 (代码块) --- */
+        .tech-section {
+            background: #111;
+            border-radius: 20px;
+            padding: 60px;
+            margin-top: 50px;
+            border: 1px solid #333;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        pre {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: #d4d4d4;
+            overflow-x: auto;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .code-keyword { color: #569cd6; }
+        .code-func { color: #dcdcaa; }
+        .code-comment { color: #6a9955; }
+        .code-number { color: #b5cea8; }
+
+        /* --- 小组辩论 (聊天流样式) --- */
+        .debate-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .debate-msg {
+            display: flex;
+            gap: 20px;
+            opacity: 0; /* JS控制显示 */
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .debate-msg.show { opacity: 1; transform: translateY(0); }
+
+        .debate-msg.right { flex-direction: row-reverse; }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            border: 2px solid transparent;
+        }
+
+        .msg-a .avatar { border-color: var(--accent-tech); color: var(--accent-tech); }
+        .msg-b .avatar { border-color: var(--accent-warn); color: var(--accent-warn); }
+        .msg-c .avatar { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+        .bubble {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .msg-a .bubble { border-top-left-radius: 0; border-left: 3px solid var(--accent-tech); }
+        .msg-b .bubble { border-top-right-radius: 0; border-right: 3px solid var(--accent-warn); }
+        .msg-c .bubble { border-top-left-radius: 0; border-left: 3px solid var(--accent-purple); }
+
+        .role-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+            opacity: 0.7;
+        }
+
+        /* --- 结论与页脚 --- */
+        .conclusion {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conclusion h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 100px;
+        }
+
+        /* --- 响应式 --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .case-study, .tech-section { grid-template-columns: 1fr; }
+            .container { padding: 60px 20px; }
+            .tech-section { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航 -->
+    <nav>
+        <div class="logo">VTV NYH <span style="color:#fff; font-weight:300;">| ETHICS</span></div>
+        <div class="nav-links">
+            <a href="#case">案例</a>
+            <a href="#conflict">冲突</a>
+            <a href="#tech">技术</a>
+            <a href="#debate">辩论</a>
+        </div>
+    </nav>
+
+    <!-- 首屏 Hero -->
+    <header class="hero">
+        <div class="hero-content fade-in-up">
+            <h1>当代码掌握生死</h1>
+            <p>自动驾驶汽车面临“电车难题”时的价值排序困境<br>是牺牲少数救多数，还是坚守不伤害的底线？</p>
+            <a href="#case" style="display:inline-block; padding: 12px 30px; background: var(--accent-tech); color: #000; font-weight: bold; border-radius: 30px; margin-top: 20px;">开始探索</a>
+        </div>
+        <div class="scroll-indicator">SCROLL DOWN</div>
+    </header>
+
+    <!-- 案例引入 -->
+    <section id="case" class="container">
+        <div class="case-study">
+            <div class="case-image fade-in-up">
+                <span class="case-tag">Real Case: 2018 Uber Crash</span>
+                <!-- 这里使用占位图，实际使用时请替换为Uber事故相关新闻图 -->
+                <img src="https://images.unsplash.com/photo-1495572050486-a96f89645481?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Night Street">
+            </div>
+            <div class="case-content fade-in-up">
+                <h2 class="section-title">01. 坦佩市的深夜</h2>
+                <h3>当算法选择了“忽略”</h3>
+                <p>2018年3月18日，Elaine Herzberg 在亚利桑那州被一辆处于自动驾驶模式的 Uber Volvo 撞死。这是全球首例自动驾驶致死案。</p>
+                <p>调查显示，雷达早在 <strong>6秒前</strong> 就发现了她，但软件系统将她的分类从“未知”跳变为“车辆”，最后判定为“自行车”。为了避免频繁急刹车影响乘客舒适度（Comfort Mode），系统设定了<strong>不立即制动</strong>的策略。直到撞击前1.3秒，系统才发出警报，但为时已晚。</p>
+                <p style="color: var(--accent-warn); border-left: 3px solid var(--accent-warn); padding-left: 15px;">
+                    <strong>核心痛点：</strong> 这不是简单的故障，而是工程师在代码中权衡“误报率”与“安全性”时做出的隐性道德选择。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心冲突 -->
+    <section id="conflict" class="container" style="background: rgba(255,255,255,0.02); border-radius: 20px;">
+        <h2 class="section-title fade-in-up">02. 哲学与代码的碰撞</h2>
+        <div class="conflict-grid">
+            <!-- 功利主义 -->
+            <div class="conflict-card utilitarian fade-in-up">
+                <h4><div class="icon-box">⚖️</div> 功利主义 (Utilitarianism)</h4>
+                <p><strong>核心逻辑：</strong> 追求“最大多数人的最大幸福”。</p>
+                <p><strong>代码表现：</strong> <code>if (victims_count > passengers_count) { sacrifice_passenger(); }</code></p>
+                <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果为了救5个闯红灯的人而牺牲1个遵守规则的乘客，正义何在？</p>
+            </div>
+
+            <!-- 义务论 -->
+            <div class="conflict-card deontological fade-in-up">
+                <h4><div class="icon-box">🛡️</div> 义务论 (Deontology)</h4>
+                <p><strong>核心逻辑：</strong> 某些行为（如杀害无辜）本身就是错的，无论结果如何。</p>
+                <p><strong>代码表现：</strong> <code>do_not_active_harm(); // 即使这意味着更多人受伤</code></p>
+                <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果车子只能选择撞墙（死乘客）或撞人（死行人），不作为是否也是一种恶？</p>
+            </div>
+
+            <!-- 消费者悖论 -->
+            <div class="conflict-card fade-in-up" style="border-color: var(--accent-warn);">
+                <h4><div class="icon-box" style="background:rgba(245,158,11,0.2); color:var(--accent-warn);">🛒</div> 消费者悖论</h4>
+                <p><strong>研究数据：</strong> MIT Moral Machine 实验显示，人们普遍赞同“功利主义”的车（救多数人），但<strong>自己绝不会买</strong>这样的车。</p>
+                <p style="margin-top:15px;">我们希望别人开“道德”的车，但自己想开“安全”的车。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术视角 -->
+    <section id="tech" class="container">
+        <div class="tech-section fade-in-up">
+            <div>
+                <h2 class="section-title">03. CS 视角：损失函数的道德权重</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">
+                    作为开发者，我们并不直接写 <code>kill()</code> 函数。道德困境被转化为<strong>概率阈值</strong>和<strong>损失函数（Loss Function）</strong>的权重调整。
+                </p>
+                <ul style="color: var(--text-muted); padding-left: 20px;">
+                    <li style="margin-bottom: 10px;">• <strong>置信度阈值 (Confidence Threshold)：</strong> 设多高？太高会漏检（Uber案），太低会幽灵刹车。</li>
+                    <li style="margin-bottom: 10px;">• <strong>舒适度惩罚 (Comfort Penalty)：</strong> 急刹车的负奖励（Negative Reward）设多大？这会间接影响紧急制动的灵敏度。</li>
+                    <li>• <strong>长尾问题 (Long-tail Cases)：</strong> 训练数据中极少出现的极端场景，模型该如何泛化？</li>
+                </ul>
+            </div>
+            <div>
+<pre>
+<span class="code-comment"># 简化的决策逻辑伪代码</span>
+<span class="code-keyword">def</span> <span class="code-func">decide_action</span>(obstacle, confidence):
+    <span class="code-keyword">if</span> confidence > <span class="code-number">0.9</span>:
+        <span class="code-func">emergency_brake</span>()
+    <span class="code-keyword">elif</span> confidence > <span class="code-number">0.5</span>:
+        <span class="code-comment"># 风险：为了舒适性，可能忽略潜在危险</span>
+        <span class="code-func">maintain_speed</span>() 
+    <span class="code-keyword">else</span>:
+        <span class="code-func">ignore</span>()
+
+<span class="code-comment"># 道德困境：这里的 0.5 阈值由谁决定？</span>
+</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- 小组辩论 -->
+    <section id="debate" class="container">
+        <h2 class="section-title fade-in-up" style="text-align: center; display: block;">04. 小组圆桌辩论</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 50px;" class="fade-in-up">成员观点碰撞：没有标准答案，只有审慎的思考</p>
+        
+        <div class="debate-container">
+            <!-- 成员 A -->
+            <div class="debate-msg msg-a">
+                <div class="avatar">A</div>
+                <div class="bubble">
+                    <span class="role-tag" style="color: var(--accent-tech);">成员 A (算法方向)</span>
+                    <p>我倾向于<strong>功利主义的最优解</strong>。虽然冷酷，但从大数据看，如果所有车都遵循“总伤害最小化”，社会总死亡人数会下降。我们可以给不同对象赋予权重，通过计算期望值来做决策。</p>
+                </div>
+            </div>
+
+            <!-- 成员 B -->
+            <div class="debate-msg msg-b">
+                <div class="avatar">B</div>
+                <div class="bubble">
+                    <span class="role-tag" style="color: var(--accent-warn);">成员 B (系统工程方向)</span>
+                    <p>我反对。技术上很难实时准确识别“儿童”或“老人”，一旦误判就是灾难。而且，如果车企公开承认算法会“主动牺牲乘客”，没人会买车。我建议采用<strong>“严格守规”</strong>策略：只要车不违规，发生事故由违规方负责，车企不承担道德审判。</p>
+                </div>
+            </div>
+
+            <!-- 成员 C -->
+            <div class="debate-msg msg-c">
+                <div class="avatar">C</div>
+                <div class="bubble">
+                    <span class="role-tag" style="color: var(--accent-purple);">成员 C (人机交互方向)</span>
+                    <p>问题的核心是<strong>信任错位</strong>。我认为道德代码不应由程序员在黑盒子里决定。车辆应提供<strong>“透明化报告”</strong>，甚至在购车时让用户知晓车辆的伦理倾向（虽然这可能被法律禁止）。真正的危机在于我们不知道机器在想什么。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 结论 -->
+    <section class="container conclusion fade-in-up">
+        <h2>谁来决定生死的代码？</h2>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">
+            程序员缺乏伦理背景，伦理学家不懂代码实现，大众投票可能情绪化。<br>
+            我们小组建议：建立<strong>独立的算法审计机构</strong>，强制安装<strong>不可篡改的黑匣子</strong>，并制定<strong>底线伦理法规</strong>（如禁止基于种族/性别的歧视性选择）。
+        </p>
+        <div style="font-size: 1.1rem; color: #fff; font-style: italic;">
+            “法律的判决，将决定未来代码的温度。”
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 VTV NYH Group Project. All Rights Reserved.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5;">Designed for Academic Discussion on AI Ethics</p>
+    </footer>
+
+    <script>
+        // 简单的滚动揭示动画脚本
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // 如果是辩论消息，添加额外的延迟效果
+                        if(entry.target.classList.contains('debate-msg')) {
+                            entry.target.classList.add('show');
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // 观察所有需要动画的元素
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // 特别观察辩论消息
+            document.querySelectorAll('.debate-msg').forEach((el, index) => {
+                el.style.transitionDelay = `${index * 0.2}s`; // 依次显示
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
