@@ -10,9 +10,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 
-    // ... existing code ...
 
-    // 2. 首屏视差与淡出效果 + 导航栏颜色自适应
+    // 【新增】2. 图片懒加载优化
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    // 如果使用了 data-src 属性，则在此处加载
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '200px 0px', // 提前200px开始加载
+            threshold: 0.01
+        });
+
+        // 观察所有使用懒加载的图片
+        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    // 3. 首屏视差与淡出效果 + 导航栏颜色自适应
     const heroSection = document.querySelector('.hero-scroll');
     const sealStamp = document.querySelector('.seal-stamp');
     const verticalNav = document.querySelector('.vertical-nav'); // 获取导航栏对象
