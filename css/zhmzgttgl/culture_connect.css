@@ -1,0 +1,663 @@
+/* --- 核心变量：中国传统色 --- */
+:root {
+    --paper-bg: #fdfbf7;       /* 宣纸白 */
+    --ink-black: #2b2b2b;      /* 墨黑 */
+    --cinnabar: #b22c2c;       /* 朱砂红 */
+    --indigo: #3d5a80;         /* 靛青 */
+    --ochre: #d4a017;          /* 赭石/金 */
+    --font-serif: 'Noto Serif SC', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--paper-bg);
+    color: var(--ink-black);
+    font-family: var(--font-serif);
+    overflow-x: hidden;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* --- 侧边导航 (仿竹简) --- */
+.vertical-nav {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-seal {
+    width: 40px;
+    height: 40px;
+    background: var(--cinnabar);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    writing-mode: vertical-rl;
+    letter-spacing: 4px;
+    box-shadow: 0 4px 10px rgba(178, 44, 44, 0.3);
+    margin-bottom: 20px;
+}
+
+.vertical-nav ul { list-style: none; }
+.vertical-nav li { margin-bottom: 20px; position: relative; }
+
+.vertical-nav a {
+    text-decoration: none;
+    color: var(--ink-black);
+    font-size: 1rem;
+    writing-mode: vertical-rl;
+    letter-spacing: 8px;
+    transition: all 0.3s;
+    opacity: 0.6;
+}
+
+.vertical-nav a:hover {
+    opacity: 1;
+    color: var(--cinnabar);
+    transform: translateX(-5px);
+}
+
+/* --- 首屏：水墨意境 --- */
+.hero-scroll {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(circle at center, #fff 0%, #f0f0f0 100%);
+    overflow: hidden;
+}
+
+.hero-scroll::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: url('https://images.unsplash.com/photo-1517480447781-a75d5b78f872?q=80&w=1000&auto=format&fit=crop') no-repeat center center/cover;
+    opacity: 0.1;
+    filter: blur(40px);
+    border-radius: 50%;
+}
+
+.vertical-title {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    z-index: 2;
+}
+
+.vertical-title h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 15px;
+    color: var(--ink-black);
+}
+
+.sub-vertical {
+    font-size: 1.2rem;
+    color: var(--indigo);
+    letter-spacing: 5px;
+    border-right: 1px solid var(--cinnabar);
+    padding-right: 20px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.seal-stamp {
+    position: absolute;
+    bottom: 15%;
+    left: 15%;
+    width: 80px;
+    height: 80px;
+    border: 3px solid var(--cinnabar);
+    color: var(--cinnabar);
+    padding-top:14px;
+    /* 强制竖排 */
+    writing-mode: vertical-rl; 
+    text-orientation: upright;
+    letter-spacing: 8px; 
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    background: rgba(253, 251, 247, 0.9); /* 使用与背景一致的宣纸色，增加不透明度 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    
+    /* 【关键修改】层级设置：高于首屏背景，但低于导航栏 */
+    z-index: 20; 
+}
+
+/* --- 确保后续章节有背景色，防止透明导致视觉混乱 --- */
+.chapter-section {
+    padding: 120px 0;
+    position: relative;
+    background-color: var(--paper-bg); /* 确保有底色 */
+    z-index: 30; /* 【关键修改】章节内容层级高于印章，这样滑过去时会自然盖住印章 */
+}
+
+.dark-theme {
+    background-color: var(--ink-black);
+    z-index: 30;
+}
+
+
+.scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    opacity: 0.5;
+}
+
+.scroll-hint .line {
+    width: 1px;
+    height: 40px;
+    background: var(--ink-black);
+}
+
+/* --- 章节通用 --- */
+.chapter-section {
+    padding: 120px 0;
+    position: relative;
+}
+
+.container {
+    max-width: 1100px; /* 稍微加宽容器 */
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.chapter-header {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.chapter-num {
+    font-size: 8rem; /* 加大背景数字 */
+    font-family: 'Times New Roman', serif;
+    color: rgba(0,0,0,0.03);
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.chapter-header h2 {
+    font-size: 2.5rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 10px;
+}
+
+.chapter-desc {
+    color: #666;
+    font-style: italic;
+}
+
+/* --- 竖排图文交错 (衣冠) --- */
+.scroll-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+/* 【新增】通用滚动项样式 */
+.scroll-item, .scroll-link {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    text-decoration: none; /* 去掉下划线 */
+    color: inherit; /* 继承文字颜色 */
+    transition: transform 0.3s ease; /* 增加过渡效果 */
+}
+
+.right-align { flex-direction: row-reverse; }
+.left-align { flex-direction: row; }
+
+/* 【新增】链接悬停效果：整体轻微右移或左移，营造“被推开”的感觉 */
+.scroll-link:hover {
+    transform: scale(1.02);
+}
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    height: 300px;
+    line-height: 2;
+    letter-spacing: 2px;
+}
+
+.vertical-text h3 {
+    font-size: 1.8rem;
+    margin-left: 20px;
+    color: var(--cinnabar);
+}
+
+/* 【新增】悬停时标题变色，增强反馈 */
+.scroll-link:hover .vertical-text h3 {
+    color: #8a1c1c; /* 深红色 */
+}
+
+.image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+    display: block;
+}
+
+/* 中式画框样式 */
+.circle-frame {
+    position: relative; /* 为提示层提供定位基准 */
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 8px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    background: #eee;
+    transition: box-shadow 0.3s ease;
+}
+
+/* 【新增】悬停时画框阴影加深 */
+.scroll-link:hover .circle-frame {
+    box-shadow: 0 15px 40px rgba(178, 44, 44, 0.2);
+}
+
+/* 【新增】点击查看提示层样式 */
+.click-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0; /* 默认隐藏 */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none; /* 防止遮挡点击 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.click-hint span {
+    font-size: 0.9rem;
+    color: var(--ink-black);
+    font-weight: bold;
+    writing-mode: horizontal-tb;
+}
+
+.hint-arrow {
+    color: var(--cinnabar);
+    font-weight: bold;
+}
+
+/* 【新增】悬停时显示提示层 */
+.scroll-link:hover .click-hint {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.scroll-item:hover img, 
+.scroll-link:hover img { 
+    transform: scale(1.1); 
+}
+
+.rect-frame {
+    width: 260px;
+    height: 360px;
+    border: 1px solid var(--ink-black);
+    padding: 10px;
+    background: white;
+}
+
+.flower-frame {
+    width: 320px;
+    height: 320px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    overflow: hidden;
+    background: #eee; /* 占位色 */
+}
+
+.scroll-item:hover img { transform: scale(1.1); }
+
+/* --- 土木营造 (优化布局：左右分栏) --- */
+.dark-theme {
+    background-color: var(--ink-black);
+    color: var(--paper-bg);
+}
+
+.dark-theme .chapter-header h2 { color: var(--paper-bg); }
+.dark-theme .chapter-desc { color: #aaa; }
+
+.arch-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* 左侧宽，右侧窄但堆叠 */
+    gap: 30px;
+    height: 600px; /* 固定高度，确保填满 */
+}
+
+.arch-card {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #333;
+}
+
+.large-card {
+    height: 100%;
+}
+
+.arch-side-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 100%;
+}
+
+.small-card {
+    flex: 1; /* 平分右侧高度 */
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(0.4) brightness(0.8);
+    transition: all 0.5s;
+}
+
+.arch-card:hover .card-img {
+    filter: grayscale(0) brightness(1);
+    transform: scale(1.05);
+}
+
+/* 大卡片文字覆盖 */
+.card-overlay-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white;
+}
+
+.card-overlay-text h3 {
+    font-size: 2rem;
+    color: var(--ochre);
+    margin-bottom: 10px;
+    writing-mode: horizontal-tb; /* 恢复横排以便阅读长文 */
+}
+
+.card-overlay-text p {
+    font-size: 1rem;
+    opacity: 0.9;
+    writing-mode: horizontal-tb;
+}
+
+/* 小卡片文字横排 */
+.card-info-horizontal {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    writing-mode: horizontal-tb;
+}
+
+.card-info-horizontal h3 {
+    color: var(--ochre);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.card-info-horizontal p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* --- 日历式布局 (岁时) --- */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 40px;
+}
+
+.cal-item {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.cal-item:hover {
+    border-left-color: var(--cinnabar);
+    background: linear-gradient(to right, rgba(178, 44, 44, 0.05), transparent);
+}
+
+.cal-date {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--indigo);
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', serif;
+}
+
+.cal-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.cal-content p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* --- 页脚 (修复挤压) --- */
+footer {
+    text-align: center;
+    padding: 100px 20px 60px; /* 增加顶部内边距 */
+    background: #f0f0f0;
+    position: relative;
+    margin-top: 50px; /* 增加与上一节的距离 */
+}
+
+.footer-seal {
+    width: 70px;
+    height: 70px;
+    background: var(--cinnabar);
+    color: white;
+    margin: 0 auto 30px;
+    
+    /* 【关键修改】确保 Flex 居中对齐 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* 清除默认内边距 */
+    
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    
+    /* 【关键修改】调整字间距，4个字在70px宽度下，4px间距比较合适 */
+    letter-spacing: 6px; 
+    padding-top:5px;
+    
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1; /* 确保行高不干扰竖排布局 */
+    box-shadow: 0 5px 15px rgba(178, 44, 44, 0.2);
+}
+
+
+
+.footer-quote {
+    font-size: 1.1rem;
+    color: var(--ink-black);
+    margin-bottom: 40px;
+    font-weight: 500;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: #999;
+    letter-spacing: 1px;
+}
+
+/* --- 动画 --- */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- 器物篇样式 --- */
+.pattern-bg {
+    background-color: #f9f9f9;
+    /* 增加淡淡的云纹或布纹背景 */
+    background-image: radial-gradient(#ddd 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.craft-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    margin-top: 60px;
+}
+
+.craft-item {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+/* 偶数项反向排列（图右文左） */
+.craft-item.reverse {
+    flex-direction: row-reverse;
+}
+
+.craft-img-box {
+    flex: 1;
+    height: 350px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.craft-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.craft-img-box:hover img {
+    transform: scale(1.05);
+}
+
+.craft-text {
+    flex: 1;
+    padding: 20px;
+}
+
+.craft-text h3 {
+    font-size: 1.8rem;
+    color: var(--ink-black);
+    margin-bottom: 20px;
+    font-family: var(--font-serif);
+    border-left: 4px solid var(--cinnabar);
+    padding-left: 15px;
+}
+
+.craft-text p {
+    font-size: 1rem;
+    line-height: 2;
+    color: #555;
+    text-align: justify;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .craft-item, .craft-item.reverse {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .craft-img-box {
+        width: 100%;
+        height: 250px;
+    }
+    .craft-text h3 {
+        border-left: none;
+        border-bottom: 2px solid var(--cinnabar);
+        padding-left: 0;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+}
+
+/* --- 响应式 --- */
+@media (max-width: 900px) {
+    .arch-grid {
+        grid-template-columns: 1fr; /* 移动端变为单列 */
+        height: auto;
+    }
+    .large-card { height: 300px; }
+    .small-card { height: 250px; }
+}
+
+@media (max-width: 768px) {
+    .vertical-nav { display: none; }
+    .vertical-title { writing-mode: horizontal-tb; height: auto; flex-direction: column; gap: 20px; }
+    .vertical-title h1 { font-size: 2.5rem; letter-spacing: 5px; }
+    .sub-vertical { writing-mode: horizontal-tb; height: auto; border-right: none; border-bottom: 1px solid var(--cinnabar); padding-bottom: 10px; padding-right: 0; }
+    
+    .scroll-item { flex-direction: column !important; gap: 30px; }
+    .vertical-text { writing-mode: horizontal-tb; height: auto; text-align: center; }
+    .circle-frame, .flower-frame { width: 260px; height: 260px; }
+    
+    .chapter-num { font-size: 5rem; top: -30px; }
+}

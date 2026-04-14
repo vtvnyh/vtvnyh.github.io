@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>锦绣中华：指尖上的民族记忆</title>
+    <link rel="stylesheet" href="../css/zhmzgttgl/culture_connect.css">
+    <script src="../js/zhmzgttgl/culture_connect.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 装饰性背景纹理 -->
+    <div class="bg-texture"></div>
+
+    <!-- 侧边导航 (仿竹简) -->
+    <nav class="vertical-nav">
+        <div class="nav-seal">锦绣</div>
+        <ul>
+            <li><a href="../index.html"><span>首页</span></a></li>
+            <li><a href="#embroidery"><span>衣冠</span></a></li>
+            <li><a href="#architecture"><span>营造</span></a></li>
+            <li><a href="#festival"><span>岁时</span></a></li>
+            <li><a href="#craft"><span>器物</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- 首屏：水墨意境 -->
+    <header id="hero" class="hero-scroll">
+        <div class="hero-content">
+            <div class="vertical-title">
+                <h1>一针一线连中华</h1>
+                <p class="sub-vertical">探寻苗绣 · 壮锦 · 彝绣的文化共鸣</p>
+            </div>
+            <div class="seal-stamp">非遗传承</div>
+        </div>
+        <div class="scroll-hint">
+            <span>展卷</span>
+            <div class="line"></div>
+        </div>
+    </header>
+
+    <!-- 第一部分：衣冠 (竖排图文交错) -->
+    <section id="embroidery" class="chapter-section">
+        <div class="container">
+            <div class="chapter-header">
+                <span class="chapter-num">壹</span>
+                <h2>衣冠上国</h2>
+                <p class="chapter-desc">穿在身上的史诗，指尖流淌的族群记忆</p>
+            </div>
+
+            <div class="scroll-layout">
+                <!-- 苗绣 -->
+                 <a href="miao_butterfly.html" class="scroll-link right-align fade-in-up">
+                    <div class="text-block vertical-text">
+                        <h3>苗绣 · 蝴蝶妈妈</h3>
+                        <p>黔东南深山之中，苗族女子以针为笔，以线为墨。蝴蝶纹样不仅是装饰，更是《苗族古歌》中人类始祖“蝴蝶妈妈”的神圣化身。</p>
+                    </div>
+                    <div class="image-frame circle-frame">
+                        <img src="../css/images/mz1.png" alt="苗绣纹样" onerror="this.style.display='none'; this.parentElement.style.background='#ddd'">
+                        
+                        <!-- 【新增】点击查看提示 -->
+                        <div class="click-hint">
+                            <span>查看详情</span>
+                            <div class="hint-arrow">&rarr;</div>
+                        </div>
+                    </div>
+                </a>
+                <!-- 壮锦 -->
+                <div class="scroll-item left-align fade-in-up">
+                    <div class="image-frame rect-frame">
+                        <img src="../css/images/mz2.png" alt="壮锦经纬" onerror="this.style.display='none'; this.parentElement.style.background='#ddd'">
+                    </div>
+                    <div class="text-block vertical-text">
+                        <h3>壮锦 · 凤舞朝阳</h3>
+                        <p>经纬交织间，是壮族人民对光明的向往。色彩热烈奔放，凤凰与太阳纹样象征着生命力的永恒绽放。</p>
+                    </div>
+                </div>
+                <!-- 彝绣 -->
+                <div class="scroll-item right-align fade-in-up">
+                    <div class="text-block vertical-text">
+                        <h3>彝绣 · 马缨花魂</h3>
+                        <p>凉山腹地，黑底红纹。马缨花被视为神圣之花，粗犷的针法中藏着彝族人对自然万灵的敬畏与祈福。</p>
+                    </div>
+                    <div class="image-frame flower-frame">
+                        <!-- 【修改】使用更稳定的 picsum 图库，并增加兜底背景色 -->
+                        <img src="../css/images/mz3.jpg" alt="彝绣色彩" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#b22c2c';">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二部分：营造 (优化布局，填补右侧空白) -->
+    <section id="architecture" class="chapter-section dark-theme">
+        <div class="container">
+            <div class="chapter-header light-text">
+                <span class="chapter-num">贰</span>
+                <h2>土木营造</h2>
+                <p class="chapter-desc">天人合一的建筑智慧，风雨桥下的岁月静好</p>
+            </div>
+
+            <div class="arch-grid">
+                <!-- 左侧大图 -->
+                <div class="arch-card large-card fade-in-up">
+                    <div class="card-img" style="background-image: url('../css/images/mz4.png');"></div>
+                    <div class="card-overlay-text">
+                        <h3>干栏与吊脚</h3>
+                        <p>依山就势，不挖地基。苗族吊脚楼与壮族干栏式建筑，体现了对山地环境的极致适应。</p>
+                    </div>
+                </div>
+
+                <!-- 右侧上下两张小图 -->
+                <div class="arch-side-stack">
+                    <div class="arch-card small-card fade-in-up">
+                        <div class="card-img" style="background-image: url('../css/images/mz5.png');"></div>
+                        <div class="card-info-horizontal">
+                            <h3>图腾立柱</h3>
+                            <p>房屋中柱雕刻日月星辰，既是支撑屋宇的脊梁，也是沟通天地的神圣通道。</p>
+                        </div>
+                    </div>
+                    
+                    <div class="arch-card small-card fade-in-up">
+                        <div class="card-img" style="background-image: url('../css/images/mz6.png');"></div>
+                        <div class="card-info-horizontal">
+                            <h3>风雨桥韵</h3>
+                            <p>集桥、廊、亭于一体，不用一钉一铆，却是村寨社交与休憩的核心公共空间。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三部分：岁时 (日历式布局) -->
+    <section id="festival" class="chapter-section">
+        <div class="container">
+            <div class="chapter-header">
+                <span class="chapter-num">叁</span>
+                <h2>岁时记趣</h2>
+                <p class="chapter-desc">欢歌中的文化认同，烟火里的民族温情</p>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="cal-item fade-in-up">
+                    <div class="cal-date">三月三</div>
+                    <div class="cal-content">
+                        <h3>歌圩盛会</h3>
+                        <p>壮乡青年以对歌传情，苗家姑娘吃姊妹饭。春日的庆典，关于爱与生命的赞歌。</p>
+                    </div>
+                </div>
+                <div class="cal-item fade-in-up">
+                    <div class="cal-date">六月二十四</div>
+                    <div class="cal-content">
+                        <h3>火把狂欢</h3>
+                        <p>彝族火把节，东方狂欢夜。火光驱除邪恶，达体舞跳出丰收的喜悦。</p>
+                    </div>
+                </div>
+                <div class="cal-item fade-in-up">
+                    <div class="cal-date">十一月</div>
+                    <div class="cal-content">
+                        <h3>苗年长桌</h3>
+                        <p>丰收后的祭祀，百米长桌宴。家族与村寨在酒杯碰撞中紧紧相连。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第四部分：器物 (新增板块) -->
+    <section id="craft" class="chapter-section pattern-bg">
+        <div class="container">
+            <div class="chapter-header">
+                <span class="chapter-num">肆</span>
+                <h2>匠心器物</h2>
+                <p class="chapter-desc">指尖的温度，凝固在银饰与漆器之间</p>
+            </div>
+
+            <div class="craft-showcase">
+                <!-- 左侧：银饰 -->
+                <div class="craft-item fade-in-up">
+                    <div class="craft-img-box">
+                        <img src="../css/images/mz7.png" alt="苗族银饰" onerror="this.style.display='none'; this.parentElement.style.background='#d4a017'">
+                    </div>
+                    <div class="craft-text">
+                        <h3>苗银 · 月光下的回响</h3>
+                        <p>苗族银饰锻制技艺精湛，以大为美、以重为美。银角、银项圈不仅是装饰，更是行走的家族财富与辟邪的图腾。</p>
+                    </div>
+                </div>
+
+                <!-- 右侧：漆器/蜡染 -->
+                <div class="craft-item reverse fade-in-up">
+                    <div class="craft-img-box">
+                        <img src="../css/images/mz8.png" alt="彝族漆器" onerror="this.style.display='none'; this.parentElement.style.background='#b22c2c'">
+                    </div>
+                    <div class="craft-text">
+                        <h3>彝漆 · 黑红黄的交响</h3>
+                        <p>彝族漆器以黑、红、黄三色为主，纹样古朴。每一件餐具、酒具都经过数十道工序，承载着对火的崇拜与生活的热爱。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚：落款 (修复挤压问题) -->
+    <footer>
+        <div class="container">
+            <div class="footer-seal">美美与共</div>
+            <p class="footer-quote">每一个纹样都是历史的回响，每一次穿戴都是文化的延续。</p>
+            <div class="copyright">&copy; 2026 VTV NYH</div>
+        </div>
+    </footer>
+
+    
+</body>
+</html>
