@@ -17,6 +17,21 @@
             color: var(--text-main);
             font-family: var(--font-sans);
             line-height: 1.6;
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            background-color: var(--bg-dark);
+        }
+
+        body.page-loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        body.page-exiting {
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity 0.4s ease-in, transform 0.4s ease-in;
         }
         
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -46,23 +61,32 @@
 
         /* --- 聊天容器 --- */
         .chat-container {
-            max-width: 800px;
-            margin: 80px auto 40px;
-            padding: 20px;
-            background: #162032; /* 比背景稍亮一点的聊天背景 */
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            min-height: 80vh;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px 50px; /* 【关键修改】增加第一个值 100px，为固定导航栏留出空间 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* 确保其他相关样式不受影响 */
         .chat-header {
             text-align: center;
+            margin-bottom: 40px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .chat-header h1 { font-size: 1.5rem; color: #fff; }
-        .chat-header p { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; }
+
+        .chat-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .chat-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
 
         /* --- 消息气泡 --- */
         .message-group {
@@ -103,16 +127,38 @@
         }
         .msg-a .role-name { color: var(--accent-tech); font-weight: bold; }
 
+                /* ... 原有代码 ... */
+
         /* 角色 B (工程) - 右侧 */
-        .msg-b { align-items: flex-end; }
-        .msg-b .message-info { flex-direction: row-reverse; }
+        .msg-b { 
+            align-items: flex-end; 
+        }
+        
+        .msg-b .message-info { 
+            flex-direction: row-reverse; 
+        }
+        
         .msg-b .message-content {
             background: #2d3b55;
             border-right: 3px solid var(--accent-warn);
             border-top-right-radius: 2px;
-            text-align: right;
+            
+            /* 【修改点 1】文字改为左对齐，阅读更舒适 */
+            text-align: left; 
+            
+            /* 【修改点 2】限制最大宽度，避免在大屏幕上拉得太长 */
+            max-width: 75%; 
+            
+            /* 【修改点 3】增加内边距，提升可读性 */
+            padding: 14px 20px;
         }
-        .msg-b .role-name { color: var(--accent-warn); font-weight: bold; }
+        
+        .msg-b .role-name { 
+            color: var(--accent-warn); 
+            font-weight: bold; 
+        }
+
+        /* ... 原有代码 ... */
 
         /* 角色 C (交互) - 左侧 */
         .msg-c { align-items: flex-start; }

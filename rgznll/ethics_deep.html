@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/rgznll/ethics_deep.css">
     <script src="../js/rgznll/ethics_deep.js"></script>
+    <script src="../js/rgznll/page-transition.js"></script>
     <title>算法困境：自动驾驶的道德代码 | AI Ethics</title>
 </head>
 <body>
@@ -78,13 +79,20 @@
         <div class="scroll-indicator">SCROLL DOWN</div>
     </header>
 
-    <!-- 案例引入 -->
+        <!-- 案例引入 -->
     <section id="case" class="container">
         <div class="case-study">
             <div class="case-image fade-in-up">
                 <span class="case-tag">Real Case: 2018 Uber Crash</span>
-                <!-- 这里使用占位图，实际使用时请替换为Uber事故相关新闻图 -->
-                <img src="../css/images/2.png" alt="Night Street">
+                
+                <!-- 【修改】将 img 替换为 video -->
+                <video autoplay muted loop playsinline poster="../css/images/2.png">
+                    <!-- 请替换为你的实际视频路径 -->
+                    <source src="../css/images/3.mp4" type="video/mp4">
+                    <!-- 如果浏览器不支持视频，回退显示图片 -->
+                    您的浏览器不支持 HTML5 视频。
+                </video>
+                
             </div>
             <div class="case-content fade-in-up">
                 <h2 class="section-title">01. 坦佩市的深夜</h2>

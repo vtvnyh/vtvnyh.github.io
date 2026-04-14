@@ -25,6 +25,21 @@
             font-family: var(--font-sans);
             line-height: 1.7;
             overflow-x: hidden;
+            opacity: 0;
+            /* transform: scale(0.98); */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            background-color: var(--bg-dark); /* 确保背景色与主题一致 */
+        }
+
+        body.page-loaded {
+            opacity: 1;
+            /* transform: scale(1); */
+        }
+
+        body.page-exiting {
+            opacity: 0;
+            /* transform: scale(1.02); */
+            transition: opacity 0.4s ease-in;
         }
         
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -82,7 +97,7 @@
             align-items: center;
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
-            z-index: 1000;
+            z-index: 1000; /* 【确保最高】 */
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
@@ -210,15 +225,22 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            background: #000; /* 视频加载前的黑色背景 */
         }
 
-        .case-image img {
+        .case-image img,
+        .case-image video {
             width: 100%;
+            height: 100%;
+            object-fit: cover; /* 关键：确保视频填满容器且不变形 */
             display: block;
             transition: transform 0.5s;
         }
 
-        .case-image:hover img { transform: scale(1.05); }
+        .case-image:hover img,
+        .case-image:hover video {
+            transform: scale(1.05);
+        }
 
         .case-tag {
             position: absolute;
@@ -231,6 +253,7 @@
             font-weight: bold;
             font-size: 0.8rem;
             text-transform: uppercase;
+            z-index: 2; /* 确保标签在视频上方 */
         }
 
         .case-content h3 {
@@ -403,21 +426,21 @@
 
                 /* ... existing css ... */
 
-               /* --- 左侧成员侧边栏 (重构版) --- */
+        /* --- 左侧成员侧边栏 (最终修正版) --- */
         .member-sidebar {
             position: fixed;
             left: 0;
             top: 55%;
-            transform: translateY(-50%);
+            transform: translateY(-50%); /* 这个 transform 是用于垂直居中的，没问题 */
             width: 100px; 
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(10px);
             border-right: 1px solid rgba(255,255,255,0.1);
             border-top-right-radius: 12px;
             border-bottom-right-radius: 12px;
-            z-index: 990;
+            z-index: 990; /* 【低于导航栏，高于内容】 */
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: visible; /* 【关键修改】改为 visible，允许提示框溢出显示 */
+            overflow: visible; 
             box-shadow: 4px 0 20px rgba(0,0,0,0.4);
             padding-bottom: 20px;
         }
@@ -425,6 +448,7 @@
         .member-sidebar:hover {
             width: 160px;
             background: rgba(30, 41, 59, 1);
+            z-index: 995; /* 悬停时稍微提高，防止被其他浮动元素遮挡 */
         }
 
         .sidebar-header {

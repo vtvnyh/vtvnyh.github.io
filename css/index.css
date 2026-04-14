@@ -1,0 +1,151 @@
+ /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            
+            /* 【新增】页面进入动画初始状态 */
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        /* 【新增】页面加载完成后的类 */
+        body.page-loaded {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* 【新增】页面退出时的类 */
+        body.page-exiting {
+            opacity: 0;
+            transform: scale(1.02); /* 稍微放大并淡出 */
+            transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        h1 {
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: #bfa05f;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        p.subtitle {
+            color: #999;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        /* 导航容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* 卡片样式 - 浅色模式 */
+        .nav-card {
+            background-color: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        /* 卡片悬停效果 */
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            border-color: transparent;
+        }
+
+        /* 卡片标题 */
+        .nav-card h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #2c2c2c;
+            transition: color 0.3s ease;
+        }
+
+        .nav-card:hover h2 {
+            color: #bfa05f;
+        }
+
+        /* 卡片描述 */
+        .nav-card p {
+            font-size: 0.9rem;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .nav-card:hover p {
+            color: #666;
+        }
+
+        /* 装饰性线条 */
+        .nav-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #bfa05f;
+            transition: width 0.4s ease;
+        }
+
+        .nav-card:hover::after {
+            width: 100%;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #aaa;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
