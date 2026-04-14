@@ -3,422 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/rgznll/ethics_deep.css">
+    <script src="../js/rgznll/ethics_deep.js"></script>
     <title>算法困境：自动驾驶的道德代码 | AI Ethics</title>
-        <style>
-        /* --- 核心变量与重置 --- */
-        :root {
-            --bg-dark: #0f172a;       /* 深蓝黑背景 */
-            --bg-card: #1e293b;       /* 卡片背景 */
-            --text-main: #e2e8f0;     /* 主要文字 */
-            --text-muted: #94a3b8;    /* 次要文字 */
-            --accent-tech: #06b6d4;   /* 科技青 */
-            --accent-warn: #f59e0b;   /* 警示橙 */
-            --accent-purple: #8b5cf6; /* 伦理紫 */
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            --font-mono: 'Fira Code', 'Consolas', monospace;
-        }
-
-        /* 【新增】全局平滑滚动设置 */
-        html {
-            scroll-behavior: smooth; /* 关键：启用平滑滚动 */
-            scroll-padding-top: 100px; /* 关键：防止固定导航栏遮挡标题 */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-        
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-
-        /* --- 动画类 --- */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* 悬浮按钮样式 */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--accent-tech);
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
-        }
-
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            background: #fff;
-        }
-        /* --- 导航栏 --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-            color: var(--accent-tech);
-        }
-
-        .nav-links a {
-            margin-left: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            position: relative;
-        }
-
-        .nav-links a:hover { color: var(--text-main); }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-tech);
-            transition: width 0.3s;
-        }
-        .nav-links a:hover::after { width: 100%; }
-
-        /* --- Hero 区域 (首屏) --- */
-        header.hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        /* 动态背景效果 */
-        header.hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(15,23,42,0) 70%);
-            animation: pulse 10s infinite alternate;
-            z-index: -1;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, var(--accent-tech));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.1;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        /* --- 通用容器 --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title::before {
-            content: '//';
-            color: var(--accent-tech);
-            margin-right: 10px;
-            font-family: var(--font-mono);
-        }
-
-        /* --- 案例引入区 (Grid 布局) --- */
-        .case-study {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .case-image {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .case-image img {
-            width: 100%;
-            display: block;
-            transition: transform 0.5s;
-        }
-
-        .case-image:hover img { transform: scale(1.05); }
-
-        .case-tag {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(245, 158, 11, 0.9);
-            color: #000;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .case-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-
-        .case-content p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-        }
-
-        /* --- 核心冲突 (卡片对比) --- */
-        .conflict-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .conflict-card {
-            background: var(--bg-card);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .conflict-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-tech);
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
-        }
-
-        .conflict-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-
-        .icon-box {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-
-        .utilitarian .icon-box { background: rgba(6, 182, 212, 0.2); color: var(--accent-tech); }
-        .deontological .icon-box { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
-
-        .conflict-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* --- 技术视角 (代码块) --- */
-        .tech-section {
-            background: #111;
-            border-radius: 20px;
-            padding: 60px;
-            margin-top: 50px;
-            border: 1px solid #333;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        pre {
-            background: #1e1e1e;
-            padding: 25px;
-            border-radius: 10px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: #d4d4d4;
-            overflow-x: auto;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        }
-
-        .code-keyword { color: #569cd6; }
-        .code-func { color: #dcdcaa; }
-        .code-comment { color: #6a9955; }
-        .code-number { color: #b5cea8; }
-
-        /* --- 小组辩论 (聊天流样式) --- */
-        .debate-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .debate-msg {
-            display: flex;
-            gap: 20px;
-            opacity: 0; /* JS控制显示 */
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-        
-        .debate-msg.show { opacity: 1; transform: translateY(0); }
-
-        .debate-msg.right { flex-direction: row-reverse; }
-
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-            border: 2px solid transparent;
-        }
-
-        .msg-a .avatar { border-color: var(--accent-tech); color: var(--accent-tech); }
-        .msg-b .avatar { border-color: var(--accent-warn); color: var(--accent-warn); }
-        .msg-c .avatar { border-color: var(--accent-purple); color: var(--accent-purple); }
-
-        .bubble {
-            background: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 80%;
-            position: relative;
-        }
-
-        .msg-a .bubble { border-top-left-radius: 0; border-left: 3px solid var(--accent-tech); }
-        .msg-b .bubble { border-top-right-radius: 0; border-right: 3px solid var(--accent-warn); }
-        .msg-c .bubble { border-top-left-radius: 0; border-left: 3px solid var(--accent-purple); }
-
-        .role-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            display: block;
-            opacity: 0.7;
-        }
-
-        /* --- 结论与页脚 --- */
-        .conclusion {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .conclusion h2 {
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            color: #fff;
-        }
-
-        footer {
-            text-align: center;
-            padding: 50px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 100px;
-        }
-
-        /* --- 响应式 --- */
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .case-study, .tech-section { grid-template-columns: 1fr; }
-            .container { padding: 60px 20px; }
-            .tech-section { padding: 30px; }
-        }
-    </style>
 </head>
 <body>
-
+         <!-- 【新增】左侧成员信息侧边栏 -->
+    <aside class="member-sidebar">
+        <div class="sidebar-header">
+            <span>小组成员</span>
+        </div>
+        <ul class="member-list">
+            <!-- 成员 1 -->
+            <li class="member-item">
+                <span class="member-name">宁毅宏</span>
+                <span class="member-id">2502011091</span>
+                <!-- 新增：职责提示 -->
+                <span class="role-tooltip">负责：案例收集与伦理冲突分析</span>
+            </li>
+            
+            <!-- 成员 2 -->
+            <li class="member-item">
+                <span class="member-name">李四</span>
+                <span class="member-id">2023002</span>
+                <span class="role-tooltip">负责：功利主义算法逻辑梳理</span>
+            </li>
+            
+            <!-- 成员 3 -->
+            <li class="member-item">
+                <span class="member-name">王五</span>
+                <span class="member-id">2023003</span>
+                <span class="role-tooltip">负责：义务论与代码实现对照</span>
+            </li>
+            
+            <!-- 成员 4 -->
+            <li class="member-item">
+                <span class="member-name">赵六</span>
+                <span class="member-id">2023004</span>
+                <span class="role-tooltip">负责：技术视角与损失函数解析</span>
+            </li>
+            
+             <!-- 成员 5 (示例) -->
+            <li class="member-item">
+                <span class="member-name">孙七</span>
+                <span class="member-id">2023005</span>
+                <span class="role-tooltip">负责：辩论实录整理与排版</span>
+            </li>
+            <li class="member-item">
+                <span class="member-name">孙七</span>
+                <span class="member-id">2023005</span>
+                <span class="role-tooltip">负责：辩论实录整理与排版</span>
+            </li>
+        </ul>
+    </aside>
     <!-- 导航 -->
     <nav>
         <div class="logo">VTV NYH <span style="color:#fff; font-weight:300;">| ETHICS</span></div>
@@ -527,19 +164,19 @@
                 </ul>
             </div>
             <div>
-<pre>
-<span class="code-comment"># 简化的决策逻辑伪代码</span>
-<span class="code-keyword">def</span> <span class="code-func">decide_action</span>(obstacle, confidence):
-    <span class="code-keyword">if</span> confidence > <span class="code-number">0.9</span>:
-        <span class="code-func">emergency_brake</span>()
-    <span class="code-keyword">elif</span> confidence > <span class="code-number">0.5</span>:
-        <span class="code-comment"># 风险：为了舒适性，可能忽略潜在危险</span>
-        <span class="code-func">maintain_speed</span>() 
-    <span class="code-keyword">else</span>:
-        <span class="code-func">ignore</span>()
+            <pre>
+            <span class="code-comment"># 简化的决策逻辑伪代码</span>
+            <span class="code-keyword">def</span> <span class="code-func">decide_action</span>(obstacle, confidence):
+                <span class="code-keyword">if</span> confidence > <span class="code-number">0.9</span>:
+                    <span class="code-func">emergency_brake</span>()
+                <span class="code-keyword">elif</span> confidence > <span class="code-number">0.5</span>:
+                    <span class="code-comment"># 风险：为了舒适性，可能忽略潜在危险</span>
+                    <span class="code-func">maintain_speed</span>() 
+                <span class="code-keyword">else</span>:
+                    <span class="code-func">ignore</span>()
 
-<span class="code-comment"># 道德困境：这里的 0.5 阈值由谁决定？</span>
-</pre>
+            <span class="code-comment"># 道德困境：这里的 0.5 阈值由谁决定？</span>
+            </pre>
             </div>
         </div>
     </section>
@@ -604,59 +241,6 @@
         </a>
     </div>
     </footer>
-
-    <script>
-        // 简单的滚动揭示动画脚本
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        // 如果是辩论消息，添加额外的延迟效果
-                        if(entry.target.classList.contains('debate-msg')) {
-                            entry.target.classList.add('show');
-                        }
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // 观察所有需要动画的元素
-            document.querySelectorAll('.fade-in-up').forEach(el => {
-                observer.observe(el);
-            });
-            
-            // 特别观察辩论消息
-            document.querySelectorAll('.debate-msg').forEach((el, index) => {
-                el.style.transitionDelay = `${index * 0.2}s`; // 依次显示
-                observer.observe(el);
-            });
-        });
-        // 在现有的 DOMContentLoaded 事件监听器中添加以下逻辑
-        const backToTopBtn = document.getElementById('backToTopBtn');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
     <!-- 悬浮返回顶部按钮 -->
     <a href="#" class="back-to-top" id="backToTopBtn" title="返回顶部">&uarr;</a>
 </body>
