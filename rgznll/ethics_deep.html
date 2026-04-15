@@ -20,40 +20,40 @@
                 <span class="member-name">宁毅宏</span>
                 <span class="member-id">2502011091</span>
                 <!-- 新增：职责提示 -->
-                <span class="role-tooltip">负责：案例收集与伦理冲突分析</span>
+                <span class="role-tooltip">负责：网页搭建以及页面布局</span>
             </li>
             
             <!-- 成员 2 -->
             <li class="member-item">
-                <span class="member-name">李四</span>
-                <span class="member-id">2023002</span>
-                <span class="role-tooltip">负责：功利主义算法逻辑梳理</span>
+                <span class="member-name">李柏键</span>
+                <span class="member-id">2502011090</span>
+                <span class="role-tooltip">负责：功利主义深度解析</span>
             </li>
             
             <!-- 成员 3 -->
             <li class="member-item">
-                <span class="member-name">王五</span>
-                <span class="member-id">2023003</span>
-                <span class="role-tooltip">负责：义务论与代码实现对照</span>
+                <span class="member-name">刘清华</span>
+                <span class="member-id">2502011081</span>
+                <span class="role-tooltip">负责：义务论深度解析</span>
             </li>
             
             <!-- 成员 4 -->
             <li class="member-item">
-                <span class="member-name">赵六</span>
-                <span class="member-id">2023004</span>
-                <span class="role-tooltip">负责：技术视角与损失函数解析</span>
+                <span class="member-name">刘嘉豪</span>
+                <span class="member-id">2502011084</span>
+                <span class="role-tooltip">负责：消费者悖论深度解析</span>
             </li>
             
              <!-- 成员 5 (示例) -->
             <li class="member-item">
-                <span class="member-name">孙七</span>
-                <span class="member-id">2023005</span>
-                <span class="role-tooltip">负责：辩论实录整理与排版</span>
+                <span class="member-name">张哲函</span>
+                <span class="member-id">2502015755</span>
+                <span class="role-tooltip">负责：讨论实录整理与总结</span>
             </li>
             <li class="member-item">
-                <span class="member-name">孙七</span>
-                <span class="member-id">2023005</span>
-                <span class="role-tooltip">负责：辩论实录整理与排版</span>
+                <span class="member-name">华文泽</span>
+                <span class="member-id">2502011080</span>
+                <span class="role-tooltip">负责：案例查找与文本填充</span>
             </li>
         </ul>
     </aside>
@@ -65,7 +65,7 @@
             <a href="#case">案例</a>
             <a href="#conflict">冲突</a>
             <a href="#tech">技术</a>
-            <a href="#debate">辩论</a>
+            <a href="#debate">讨论</a>
         </div>
     </nav>
 
@@ -96,11 +96,11 @@
             </div>
             <div class="case-content fade-in-up">
                 <h2 class="section-title">01. 坦佩市的深夜</h2>
-                <h3>当算法选择了“忽略”</h3>
+                <h3>当代码选择了乘客</h3>
                 <p>2018年3月18日，Elaine Herzberg 在亚利桑那州被一辆处于自动驾驶模式的 Uber Volvo 撞死。这是全球首例自动驾驶致死案。</p>
                 <p>调查显示，雷达早在 <strong>6秒前</strong> 就发现了她，但软件系统将她的分类从“未知”跳变为“车辆”，最后判定为“自行车”。为了避免频繁急刹车影响乘客舒适度（Comfort Mode），系统设定了<strong>不立即制动</strong>的策略。直到撞击前1.3秒，系统才发出警报，但为时已晚。</p>
                 <p style="color: var(--accent-warn); border-left: 3px solid var(--accent-warn); padding-left: 15px;">
-                    <strong>核心痛点：</strong> 这不是简单的故障，而是工程师在代码中权衡“误报率”与“安全性”时做出的隐性道德选择。
+                    <strong>核心总结：</strong> 这不是一起简单的事故，而是代码工程师在代码中做出的隐性道德选择（乘客 or 路人）。
                 </p>
             </div>
         </div>
@@ -108,16 +108,16 @@
 
         <!-- 核心冲突 -->
     <section id="conflict" class="container" style="background: rgba(255,255,255,0.02); border-radius: 20px;">
-        <h2 class="section-title fade-in-up">02. 哲学与代码的碰撞</h2>
+        <h2 class="section-title fade-in-up">02. 思想与代码的碰撞</h2>
         <div class="conflict-grid">
             
             <!-- 功利主义卡片：添加链接包裹 -->
             <a href="utilitarianism.html" style="text-decoration: none; color: inherit; display: block;">
                 <div class="conflict-card utilitarian fade-in-up" style="height: 100%; cursor: pointer;">
                     <h4><div class="icon-box">⚖️</div> 功利主义 (Utilitarianism)</h4>
-                    <p><strong>核心逻辑：</strong> 追求“最大多数人的最大幸福”。</p>
+                    <p><strong>核心逻辑：</strong> 追求“伤害最小化”。</p>
                     <p><strong>代码表现：</strong> <code>if (victims_count > passengers_count) { sacrifice_passenger(); }</code></p>
-                    <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果为了救5个闯红灯的人而牺牲1个遵守规则的乘客，正义何在？</p>
+                    <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：为了救5个闯红灯的人而牺牲1个遵守规则的乘客，这样子真的正确吗？</p>
                     
                     <!-- 新增提示文字 -->
                     <div style="margin-top: 20px; color: var(--accent-tech); font-size: 0.9rem; font-weight: bold;">
@@ -131,8 +131,8 @@
                 <div class="conflict-card deontological fade-in-up" style="height: 100%; cursor: pointer;">
                     <h4><div class="icon-box">🛡️</div> 义务论 (Deontology)</h4>
                     <p><strong>核心逻辑：</strong> 某些行为（如杀害无辜）本身就是错的，无论结果如何。</p>
-                    <p><strong>代码表现：</strong> <code>do_not_active_harm(); // 即使这意味着更多人受伤</code></p>
-                    <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果车子只能选择撞墙（死乘客）或撞人（死行人），不作为是否也是一种恶？</p>
+                    <p><strong>代码表现：</strong> <code>do_not_active_harm();</code></p>
+                    <p style="margin-top:15px; font-size:0.85rem; color:#666;">困境：如果车子只能选择撞墙（死乘客）或撞人（死行人）而没有其他拯救措施，那责任由谁来承担？</p>
                     
                     <!-- 新增提示文字 -->
                     <div style="margin-top: 20px; color: var(--accent-purple); font-size: 0.9rem; font-weight: bold;">
@@ -161,9 +161,9 @@
     <section id="tech" class="container">
         <div class="tech-section fade-in-up">
             <div>
-                <h2 class="section-title">03. CS 视角：损失函数的道德权重</h2>
+                <h2 class="section-title">03. 损失函数的道德权重</h2>
                 <p style="color: var(--text-muted); margin-bottom: 20px;">
-                    作为开发者，我们并不直接写 <code>kill()</code> 函数。道德困境被转化为<strong>概率阈值</strong>和<strong>损失函数（Loss Function）</strong>的权重调整。
+                    道德困境被转化为<strong>概率阈值</strong>和<strong>损失函数（Loss Function）</strong>的权重调整。
                 </p>
                 <ul style="color: var(--text-muted); padding-left: 20px;">
                     <li style="margin-bottom: 10px;">• <strong>置信度阈值 (Confidence Threshold)：</strong> 设多高？太高会漏检（Uber案），太低会幽灵刹车。</li>
@@ -191,10 +191,9 @@
 
         <!-- 小组辩论 -->
     <section id="debate" class="container">
-        <h2 class="section-title fade-in-up" style="text-align: center; display: block;">04. 小组圆桌辩论</h2>
+        <h2 class="section-title fade-in-up" style="text-align: center; display: block;">04. 小组讨论</h2>
         <p style="text-align: center; color: var(--text-muted); margin-bottom: 50px;" class="fade-in-up">
-            没有标准答案，只有审慎的思考。<br>
-            点击下方按钮，查看小组成员关于“生死代码”的真实讨论记录。
+            点击下方按钮，查看小组成员讨论记录。
         </p>
         
         <!-- 【修改点】将静态辩论改为点击进入子页面 -->
@@ -233,7 +232,7 @@
         <h2>谁来决定生死的代码？</h2>
         <p style="color: var(--text-muted); margin-bottom: 30px;">
             程序员缺乏伦理背景，伦理学家不懂代码实现，大众投票可能情绪化。<br>
-            我们小组建议：建立<strong>独立的算法审计机构</strong>，强制安装<strong>不可篡改的黑匣子</strong>，并制定<strong>底线伦理法规</strong>（如禁止基于种族/性别的歧视性选择）。
+            我们小组建议：建立<strong>独立的算法审计机构</strong>，强制安装<strong>不可篡改的黑匣子</strong>，并制定<strong>底线伦理法规</strong>。
         </p>
         <div style="font-size: 1.1rem; color: #fff; font-style: italic;">
             “法律的判决，将决定未来代码的温度。”

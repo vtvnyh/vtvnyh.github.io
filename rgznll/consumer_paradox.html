@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/rgznll/consumer_paradox.css">
+    <script src="../js/jquery-3.6.4.min.js"></script>
     <script src="../js/rgznll/consumer_paradox.js"></script>
     <script src="../js/rgznll/page-transition.js"></script>
     <title>深度解析：消费者悖论 | AI Ethics</title>
@@ -35,34 +36,38 @@
 
         <section>
             <h2>01. MIT Moral Machine 实验启示</h2>
-            <p>麻省理工学院媒体实验室发起的“Moral Machine”实验收集了全球数百万人的数据，揭示了一个残酷的社会困境（Social Dilemma）。</p>
+            <p>麻省理工学院媒体实验室发起的"Moral Machine"实验收集了全球数百万人的数据，揭示了一个残酷的社会困境（Social Dilemma）。</p>
             
-            <div class="chart-placeholder">
-                [数据可视化示意]<br>
-                绿色柱状图：80%的人认为车子应该牺牲1名乘客救5名行人。<br>
-                红色柱状图：只有20%的人表示愿意购买这种会牺牲自己的车子。
+            <div class="chart-container">
+                <canvas id="paradoxChart"></canvas>
             </div>
+            
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <span class="legend-color moral"></span>
+                    <span>道德认同（认为应该这样做）</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color purchase"></span>
+                    <span>购买意愿（愿意买这样的车）</span>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-muted);">
+                <em>数据来源：MIT Moral Machine Experiment (2018) 及 Bonnefon et al. (2016) 研究。数据显示了明显的知行不一现象。</em>
+            </p>
 
-            <p>这意味着，如果政府强制规定所有车辆必须遵循“功利主义算法”，可能会导致<strong>自动驾驶汽车的普及率大幅下降</strong>。而由于人工驾驶的事故率远高于自动驾驶，这反而可能导致总体道路死亡人数的上升。</p>
+            <p>这意味着，如果政府强制规定所有车辆必须遵循"功利主义算法"，可能会导致<strong>自动驾驶汽车的普及率大幅下降</strong>。而由于人工驾驶的事故率远高于自动驾驶，这反而可能导致总体道路死亡人数的上升。</p>
         </section>
 
         <section>
-            <h2>02. 为什么会这样？</h2>
-            <ul>
-                <li><strong>本能自我保护：</strong> 进化心理学告诉我们，生存是第一本能。在生死攸关的时刻，理性计算的“社会总福利”往往败给个体的求生欲。</li>
-                <li><strong>信任缺失：</strong> 消费者担心一旦将控制权交给算法，自己就成了“可被牺牲的计算单元”。这种对黑盒子的不信任加剧了防御心理。</li>
-                <li><strong>责任分散效应：</strong> 人们希望<b>别人</b>开道德的车来保障公共安全，但自己享受<b>不道德</b>的车带来的私人安全红利。</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>03. 破局之道：监管与市场</h2>
+            <h2>03. 解决方案：监管与市场</h2>
             <p>既然依靠消费者的道德自觉行不通，解决方案可能来自外部：</p>
             
             <div class="highlight-box" style="border-color: var(--accent-tech); background: rgba(6, 182, 212, 0.1);">
                 <strong style="color: var(--accent-tech);">可能的解决方案：</strong><br>
                 1. <strong>强制统一标准：</strong> 法律规定所有车辆必须具备相同的伦理逻辑（如最低伤害原则），消除“恶性竞争”。<br>
-                2. <strong>保险激励：</strong> 为购买“道德型”车辆的车主提供大幅保费优惠。<br>
+                2. <strong>保险激励：</strong> 为购买“道德型”车辆的车主提供大幅保险费用优惠。<br>
                 3. <strong>透明度：</strong> 允许用户在一定范围内调整车辆的“风险偏好”，但设定法律底线。
             </div>
 

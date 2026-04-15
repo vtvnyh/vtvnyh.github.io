@@ -101,14 +101,52 @@
         
         .highlight-box strong { color: var(--accent-warn); }
 
-        .chart-placeholder {
-            background: #111;
-            border: 1px dashed #444;
-            padding: 40px;
-            text-align: center;
-            border-radius: 8px;
+        /* --- 图表容器 --- */
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
             margin: 30px 0;
-            color: #666;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        #paradoxChart {
+            width: 100%;
+            height: 450px;
+            display: block;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .legend-color.moral {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
+
+        .legend-color.purchase {
+            background: linear-gradient(135deg, #ef4444, #f87171);
         }
 
         ul {
