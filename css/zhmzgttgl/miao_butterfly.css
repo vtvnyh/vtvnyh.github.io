@@ -15,6 +15,21 @@ body {
     font-family: var(--font-serif);
     line-height: 1.8;
     overflow-x: hidden;
+    
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+body.page-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.page-exiting {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
 }
 
 /* --- 顶部导航 --- */

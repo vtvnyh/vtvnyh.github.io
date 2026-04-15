@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>锦绣中华：指尖上的民族记忆</title>
     <link rel="stylesheet" href="../css/zhmzgttgl/culture_connect.css">
+    <script src="../js/jquery-3.6.4.min.js"></script>
+    <script src="../js/rgznll/page-transition.js"></script>
     <script src="../js/zhmzgttgl/culture_connect.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
     <!-- 【新增】预加载关键图片 -->
-    <link rel="preload" as="image" href="../css/images/mz1.png">
-    <link rel="preload" as="image" href="../css/images/mz4.png">
+    <link rel="preload" as="image" href="../css/images/zhmzgttgl/mz1.png">
+    <link rel="preload" as="image" href="../css/images/zhmzgttgl/mz4.png">
 </head>
 <body>
 
@@ -60,7 +62,7 @@
                         <p>黔东南深山之中，苗族女子以针为笔，以线为墨。蝴蝶纹样不仅是装饰，更是《苗族古歌》中人类始祖"蝴蝶妈妈"的神圣化身。</p>
                     </div>
                     <div class="image-frame circle-frame">
-                        <img src="../css/images/mz1.png" alt="苗绣纹样" loading="lazy" decoding="async" width="400" height="400" onerror="this.style.display='none'; this.parentElement.style.background='#ddd'">
+                        <img src="../css/images/zhmzgttgl/mz1.png" alt="苗绣纹样" loading="lazy" decoding="async" width="400" height="400" onerror="this.style.display='none'; this.parentElement.style.background='#ddd'">
                         
                         <!-- 【新增】点击查看提示 -->
                         <div class="click-hint">
@@ -70,26 +72,35 @@
                     </div>
                 </a>
                 <!-- 壮锦 -->
-                <div class="scroll-item left-align fade-in-up">
+                <a href="../zhmzgttgl/zhuang_brocade.html" class="scroll-link left-align fade-in-up">
                     <div class="image-frame rect-frame">
-                        <img src="../css/images/mz2.png" alt="壮锦经纬" loading="lazy" decoding="async" width="400" height="300" onerror="this.style.display='none'; this.parentElement.style.background='#ddd'">
+                        <img src="../css/images/zhmzgttgl/mz2.png" alt="壮锦经纬" loading="lazy" decoding="async" width="400" height="300" onerror="this.style.display='none'; this.parentElement.style.background='#ddd'">
+                        
+                        <div class="click-hint">
+                            <span>查看详情</span>
+                            <div class="hint-arrow">&rarr;</div>
+                        </div>
                     </div>
                     <div class="text-block vertical-text">
                         <h3>壮锦 · 凤舞朝阳</h3>
                         <p>经纬交织间，是壮族人民对光明的向往。色彩热烈奔放，凤凰与太阳纹样象征着生命力的永恒绽放。</p>
                     </div>
-                </div>
+                </a>
                 <!-- 彝绣 -->
-                <div class="scroll-item right-align fade-in-up">
+                <a href="yi_embroidery.html" class="scroll-link right-align fade-in-up">
                     <div class="text-block vertical-text">
                         <h3>彝绣 · 马缨花魂</h3>
                         <p>凉山腹地，黑底红纹。马缨花被视为神圣之花，粗犷的针法中藏着彝族人对自然万灵的敬畏与祈福。</p>
                     </div>
                     <div class="image-frame flower-frame">
-                        <!-- 【修改】使用更稳定的 picsum 图库，并增加兜底背景色 -->
-                        <img src="../css/images/mz3.jpg" alt="彝绣色彩" loading="lazy" decoding="async" width="400" height="300" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#b22c2c';">
+                        <img src="../css/images/zhmzgttgl/mz3.jpg" alt="彝绣色彩" loading="lazy" decoding="async" width="400" height="300" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#b22c2c';">
+                        
+                        <div class="click-hint">
+                            <span>查看详情</span>
+                            <div class="hint-arrow">&rarr;</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -106,7 +117,7 @@
             <div class="arch-grid">
                 <!-- 左侧大图 -->
                 <div class="arch-card large-card fade-in-up">
-                    <div class="card-img" style="background-image: url('../css/images/mz4.png');" role="img" aria-label="干栏与吊脚楼建筑"></div>
+                    <div class="card-img" style="background-image: url('../css/images/zhmzgttgl/mz4.png');" role="img" aria-label="干栏与吊脚楼建筑"></div>
                     <div class="card-overlay-text">
                         <h3>干栏与吊脚</h3>
                         <p>依山就势，不挖地基。苗族吊脚楼与壮族干栏式建筑，体现了对山地环境的极致适应。</p>
@@ -116,7 +127,7 @@
                 <!-- 右侧上下两张小图 -->
                 <div class="arch-side-stack">
                     <div class="arch-card small-card fade-in-up">
-                        <div class="card-img" style="background-image: url('../css/images/mz5.png');" role="img" aria-label="图腾立柱"></div>
+                        <div class="card-img" style="background-image: url('../css/images/zhmzgttgl/mz5.png');" role="img" aria-label="图腾立柱"></div>
                         <div class="card-info-horizontal">
                             <h3>图腾立柱</h3>
                             <p>房屋中柱雕刻日月星辰，既是支撑屋宇的脊梁，也是沟通天地的神圣通道。</p>
@@ -124,7 +135,7 @@
                     </div>
                     
                     <div class="arch-card small-card fade-in-up">
-                        <div class="card-img" style="background-image: url('../css/images/mz6.png');" role="img" aria-label="风雨桥"></div>
+                        <div class="card-img" style="background-image: url('../css/images/zhmzgttgl/mz6.png');" role="img" aria-label="风雨桥"></div>
                         <div class="card-info-horizontal">
                             <h3>风雨桥韵</h3>
                             <p>集桥、廊、亭于一体，不用一钉一铆，却是村寨社交与休憩的核心公共空间。</p>
@@ -183,7 +194,7 @@
                 <!-- 左侧：银饰 -->
                 <div class="craft-item fade-in-up">
                     <div class="craft-img-box">
-                        <img src="../css/images/mz8.png" alt="苗族银饰" loading="lazy" decoding="async" width="500" height="400" onerror="this.style.display='none'; this.parentElement.style.background='#d4a017'">
+                        <img src="../css/images/zhmzgttgl/mz8.png" alt="苗族银饰" loading="lazy" decoding="async" width="500" height="400" onerror="this.style.display='none'; this.parentElement.style.background='#d4a017'">
                     </div>
                     <div class="craft-text">
                         <h3>苗银 · 月光下的回响</h3>
@@ -194,7 +205,7 @@
                 <!-- 右侧：漆器/蜡染 -->
                 <div class="craft-item reverse fade-in-up">
                     <div class="craft-img-box">
-                        <img src="../css/images/mz7.png" alt="彝族漆器" loading="lazy" decoding="async" width="500" height="400" onerror="this.style.display='none'; this.parentElement.style.background='#b22c2c'">
+                        <img src="../css/images/zhmzgttgl/mz7.png" alt="彝族漆器" loading="lazy" decoding="async" width="500" height="400" onerror="this.style.display='none'; this.parentElement.style.background='#b22c2c'">
                     </div>
                     <div class="craft-text">
                         <h3>彝漆 · 黑红黄的交响</h3>
