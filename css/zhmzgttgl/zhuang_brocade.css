@@ -60,6 +60,13 @@ body.page-exiting {
     background: rgba(250, 248, 243, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.top-bar.scrolled {
+    padding: 12px 40px !important;
+    background: rgba(250, 248, 243, 0.98) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
 }
 
 .back-btn {
