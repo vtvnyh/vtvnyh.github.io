@@ -313,7 +313,7 @@ body.page-exiting {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 10px 20px;
     border-radius: 30px;
     display: flex;
@@ -322,7 +322,8 @@ body.page-exiting {
     opacity: 0; /* 默认隐藏 */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none; /* 防止遮挡点击 */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 10; /* 确保在最上层 */
 }
 
 .click-hint span {
@@ -659,7 +660,90 @@ footer {
     text-align: justify;
 }
 
+/* 【新增】器物卡片悬停效果 */
+.scroll-link.craft-item:hover .craft-img-box {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+}
 
+/* 【新增】器物卡片点击提示 - 使用更具体的选择器，避免影响衣冠部分 */
+.craft-img-box .craft-click-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(212, 160, 23, 0.95);
+    padding: 12px 24px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    box-shadow: 0 6px 20px rgba(212, 160, 23, 0.4);
+}
+
+.craft-img-box .craft-click-hint span {
+    font-size: 0.95rem;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.craft-img-box .craft-click-hint .hint-arrow {
+    color: white;
+    font-size: 1.2rem;
+    animation: arrowBounce 1s infinite;
+}
+
+.scroll-link.craft-item:hover .craft-img-box .craft-click-hint {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* 【新增】建筑卡片专用的增强版提示样式 */
+.click-hint-enhanced {
+    background: rgba(212, 160, 23, 0.95); /* 使用赭石金色，更醒目 */
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 6px 20px rgba(212, 160, 23, 0.4);
+    top: 40%; /* 调整位置，从50%改为40%，更靠上 */
+}
+
+.click-hint-enhanced span {
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.click-hint-enhanced .hint-arrow {
+    color: white;
+    font-size: 1.2rem;
+    animation: arrowBounce 1s infinite;
+}
+
+/* 箭头跳动动画 */
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+/* 建筑卡片悬停时的特殊效果 */
+.arch-card.large-card:hover .click-hint-enhanced {
+    background: rgba(178, 44, 44, 0.95); /* 悬停时变为朱砂红 */
+    box-shadow: 0 8px 25px rgba(178, 44, 44, 0.5);
+}
+
+.scroll-item:hover img, 
+.scroll-link:hover img { 
+    transform: scale(1.1); 
+}
 
 /* 响应式调整 */
 @media (max-width: 768px) {
