@@ -251,15 +251,20 @@ body.page-exiting {
 .detail-img img { width: 100%; border-radius: 4px; }
 
 /* --- 页脚 --- */
-footer {
-    text-align: center;
-    padding: 80px 20px 50px;
+.page-footer {
+    padding: 80px 40px 50px;
     background: #f0f0f0;
+    text-align: center;
 }
 
-.footer-seal-small {
-    width: 40px;
-    height: 40px;
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer-seal {
+    width: 60px;
+    height: 60px;
     background: var(--cinnabar);
     color: white;
     margin: 0 auto 25px;
@@ -267,12 +272,15 @@ footer {
     align-items: center;
     justify-content: center;
     writing-mode: vertical-rl;
-    font-size: 0.8rem;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(178, 44, 44, 0.3);
+    text-orientation: upright;
+    letter-spacing: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
 }
 
-.footer-quote-miao {
+.footer-quote {
     font-size: 1.2rem;
     color: var(--ink-black);
     margin-bottom: 30px;
@@ -280,15 +288,15 @@ footer {
     letter-spacing: 2px;
 }
 
-.footer-navigation-miao {
+.footer-links {
+    margin-bottom: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-bottom: 30px;
 }
 
-.footer-navigation-miao a {
+.footer-links a {
     text-decoration: none;
     color: var(--cinnabar);
     font-size: 0.95rem;
@@ -297,8 +305,8 @@ footer {
     border-radius: 20px;
 }
 
-.footer-navigation-miao a:hover {
-    background: rgba(178, 44, 44, 0.1);
+.footer-links a:hover {
+    background: rgba(196, 30, 58, 0.1);
     color: #8a1c1c;
 }
 
