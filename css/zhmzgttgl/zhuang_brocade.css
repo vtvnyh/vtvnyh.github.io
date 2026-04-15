@@ -747,10 +747,11 @@ body.page-exiting {
 }
 
 .footer-links a:hover {
-    color: var(--gold);
+    background: rgba(196, 30, 58, 0.1);
+    color: #8a1c1c;
 }
 
-.footer-links span {
+.separator {
     color: #ccc;
 }
 
