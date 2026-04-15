@@ -10,7 +10,10 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { 
+    scroll-behavior: smooth; 
+    scroll-padding-top: 80px; /* 【新增】为固定导航留出空间 */
+}
 
 body {
     background-color: var(--paper-bg);
@@ -18,13 +21,28 @@ body {
     font-family: var(--font-serif);
     overflow-x: hidden;
     background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-    
+
+}
+
+/* 【新增】页面加载动画 wrapper */
+/* .page-wrapper {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-body.page-loaded {
+body.page-loaded .page-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.page-exiting .page-wrapper {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+} */
+
+/* body.page-loaded {
     opacity: 1;
     transform: translateY(0);
 }
@@ -33,7 +51,7 @@ body.page-exiting {
     opacity: 0;
     transform: translateY(-20px);
     transition: opacity 0.4s ease-in, transform 0.4s ease-in;
-}
+} */
 
 /* --- 侧边导航 (仿竹简) --- */
 .vertical-nav {
@@ -41,11 +59,12 @@ body.page-exiting {
     right: 40px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1000;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    pointer-events: auto;
 }
 
 .nav-seal {
@@ -62,10 +81,21 @@ body.page-exiting {
     letter-spacing: 4px;
     box-shadow: 0 4px 10px rgba(178, 44, 44, 0.3);
     margin-bottom: 20px;
+    pointer-events: auto;
 }
 
-.vertical-nav ul { list-style: none; }
-.vertical-nav li { margin-bottom: 20px; position: relative; }
+.vertical-nav ul { 
+    list-style: none; 
+    pointer-events: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.vertical-nav li { 
+    margin-bottom: 20px; 
+    position: relative; 
+    pointer-events: auto;
+}
 
 .vertical-nav a {
     text-decoration: none;
@@ -75,6 +105,9 @@ body.page-exiting {
     letter-spacing: 8px;
     transition: all 0.3s;
     opacity: 0.6;
+    pointer-events: auto;
+    cursor: pointer;
+    display: block;
 }
 
 .vertical-nav a:hover {
@@ -166,12 +199,12 @@ body.page-exiting {
     padding: 120px 0;
     position: relative;
     background-color: var(--paper-bg); /* 确保有底色 */
-    z-index: 30; /* 【关键修改】章节内容层级高于印章，这样滑过去时会自然盖住印章 */
+    z-index: 1; /* 【修复】降低层级，避免遮挡导航 */
 }
 
 .dark-theme {
     background-color: var(--ink-black);
-    z-index: 30;
+    z-index: 1; /* 【修复】降低层级 */
 }
 
 

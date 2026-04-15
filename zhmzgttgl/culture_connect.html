@@ -18,7 +18,7 @@
     <!-- 装饰性背景纹理 -->
     <div class="bg-texture"></div>
 
-    <!-- 侧边导航 (仿竹简) -->
+     <!-- 侧边导航 (仿竹简) - 保持在 body 直接子级，不受 transform 影响 -->
     <nav class="vertical-nav">
         <div class="nav-seal">锦绣</div>
         <ul>
@@ -29,6 +29,9 @@
             <li><a href="#craft"><span>器物</span></a></li>
         </ul>
     </nav>
+
+    <!-- 【新增】页面内容包装器，用于加载动画 -->
+    <!-- <div class="page-wrapper"> -->
 
     <!-- 首屏：水墨意境 -->
     <header id="hero" class="hero-scroll">
@@ -250,7 +253,7 @@
             <div class="copyright">&copy; 2026 VTV NYH</div>
         </div>
     </footer>
-
+    <!-- </div> 【新增】关闭 page-wrapper -->
     
 </body>
 </html>
