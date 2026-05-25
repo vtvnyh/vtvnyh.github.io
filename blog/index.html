@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="logo">VTV <span>NYH</span></a>
+        <button class="nav-toggle" id="navToggle">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="projects.html">学习项目</a></li>
+            <li><a href="notes.html">学习笔记</a></li>
+            <li><a href="links.html">推荐资源</a></li>
+            <li><a href="about.html">关于</a></li>
+            <li><a href="../index.html">返回导航页</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="page-header">
+    <h1>个人博客</h1>
+</div>
+
+<section style="padding:30px 0 10px">
+    <div class="container">
+        <div class="carousel-wrap">
+            <div class="carousel-track">
+                <div class="carousel-slide" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+                    <div>
+                        <h2>音乐播放器</h2>
+                        <a href="projects.html">查看项目</a>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background:linear-gradient(135deg,#0f0c29,#302b63)">
+                    <div>
+                        <h2>飞机大战</h2>
+                        <a href="projects.html">查看项目</a>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background:linear-gradient(135deg,#f093fb,#f5576c)">
+                    <div>
+                        <h2>天气预报</h2>
+                        <a href="projects.html">查看项目</a>
+                    </div>
+                </div>
+                <div class="carousel-slide" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">
+                    <div>
+                        <h2>时钟 · 计算器</h2>
+                        <a href="projects.html">查看项目</a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn prev">‹</button>
+            <button class="carousel-btn next">›</button>
+        </div>
+        <div class="carousel-dots">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">内容分类</h2>
+        <div class="card-grid">
+            <div class="card"><a href="projects.html">
+                <h3>学习项目</h3>
+                <p>课后作业与练习项目展示</p>
+                <span class="tag">查看项目 →</span>
+            </a></div>
+            <div class="card"><a href="notes.html">
+                <h3>学习笔记</h3>
+                <p>学习过程中的要点记录</p>
+                <span class="tag">阅读笔记 →</span>
+            </a></div>
+            <div class="card"><a href="links.html">
+                <h3>推荐资源</h3>
+                <p>实用的前端学习资源</p>
+                <span class="tag">查看资源 →</span>
+            </a></div>
+            <div class="card"><a href="about.html">
+                <h3>关于我</h3>
+                <p>个人简介与联系方式</p>
+                <span class="tag">了解更多 →</span>
+            </a></div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    &copy; 2026 VTV NYH
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
